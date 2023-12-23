@@ -1,6 +1,4 @@
-# Cleangine
-
-**Todo: Rename Cleangine to 'Zenith Engine'**
+# Zenith Game Engine
 
 My game engine for simple games & apps. Three.js for 3D & Pixi.js for 2D.
 

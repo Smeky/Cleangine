@@ -8,7 +8,7 @@ import { UserInterface } from './ui/index.js'
 import { disposables } from './utils/disposables.js'
 import EventEmitter from 'eventemitter3'
 
-export class Cleangine {
+export class Zenith {
     static DeltaFactor = 1 / 1000
 
     constructor() {
@@ -70,7 +70,7 @@ export class Cleangine {
         if (!this.lastFrameTime)
             this.lastFrameTime = time
 
-        this.delta = (time - this.lastFrameTime) * Cleangine.DeltaFactor
+        this.delta = (time - this.lastFrameTime) * Zenith.DeltaFactor
         this.lastFrameTime = time
 
         // Not needed atm

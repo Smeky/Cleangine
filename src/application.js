@@ -1,4 +1,4 @@
-import { Cleangine } from './cleangine'
+import { Zenith } from './zenith'
 import { AssetManager } from './asset-manager'
 import { disposables } from './utils/disposables'
 
@@ -34,7 +34,7 @@ export class Application {
         this.disposables = disposables()
         // this.store = useGameStore()
 
-        this.engine = this.disposables.add(new Cleangine())
+        this.engine = this.disposables.add(new Zenith())
         this.assets = this.disposables.add(new AssetManager())
 
         this.engine.setup({ container })

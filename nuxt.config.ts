@@ -11,7 +11,7 @@ export default defineNuxtConfig({
 
     app: {
         head: {
-            title: 'Cleangine playground',
+            title: 'Zenith playground',
             htmlAttrs: { lang: 'en' },
             meta: [
                 { charset: 'utf-8' },
