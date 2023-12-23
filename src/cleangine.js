@@ -12,16 +12,12 @@ export class Cleangine {
     static DeltaFactor = 1 / 1000
 
     constructor() {
+        this.update = this.update.bind(this)
+
         this.isRunning = false
         this.lastFrameTime = 0
         this.delta = 0
         this.disposables = disposables()
-
-        // Todo: move into this.hooks and create a simple hook system
-        this._onBeforeUpdateCbs = []
-        this._onAfterUpdateCbs = []
-
-        this.update = this.update.bind(this)
     }
 
     /**
@@ -77,33 +73,22 @@ export class Cleangine {
         this.delta = (time - this.lastFrameTime) * Cleangine.DeltaFactor
         this.lastFrameTime = time
 
-        this._onBeforeUpdateCbs.forEach(cb => cb(this.delta, time))
+        // Not needed atm
+        // this.events.emit('update:before', this.delta, time)
 
         this.ecs.update(this.delta, time)
         this.scene.update(this.delta, time)
         this.tweens.update(this.delta, time)
+
+        this.events.emit('update', this.delta, time)
+
         this.graphics.update(this.delta, time)
         this.ui.update(this.delta, time)
 
-        this._onAfterUpdateCbs.forEach(cb => cb(this.delta, time))
+        // Not needed atm
+        // this.events.emit('update:after', this.delta, time)
 
         window.requestAnimationFrame(this.update)
-    }
-
-    /**
-     * 
-     * @param {Function} cb 
-     */
-    onBeforeUpdate(cb) {
-        this._onBeforeUpdateCbs.push(cb)
-    }
-
-    /**
-     * 
-     * @param {Function} cb 
-     */
-    onAfterUpdate(cb) {
-        this._onAfterUpdateCbs.push(cb)
     }
 
     onBlur = () => this.stop()

@@ -38,7 +38,7 @@ export class Application {
         this.assets = this.disposables.add(new AssetManager())
 
         this.engine.setup({ container })
-        this.engine.onBeforeUpdate(this.update.bind(this))
+        this.engine.events.on('update', this.update.bind(this))
 
         // this.engine.ecs.registerSystems(Systems)
 
@@ -73,7 +73,6 @@ export class Application {
      * @param {Number} time 
      */
     update(delta, time) {
-        this.events.emit('update', delta, time)
         this.cube.rotation.y += delta * 0.5
     }
 
