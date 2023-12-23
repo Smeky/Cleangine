@@ -1,0 +1,21 @@
+{
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/.nuxt": true,
+        "**/.vscode": true,
+        "**/.output": true,
+        "**/.git": true,
+    },
+    "window.title": "Cleangine ${separator}${activeEditorShort}",
+    "vue.codeActions.enabled": false,
+    "search.useIgnoreFiles": false,
+    "github.copilot.enable": {
+        "plaintext": "true",
+        "markdown": "true"
+    },
+    "workbench.editor.labelFormat": "short",
+    "workbench.editor.untitled.labelFormat": "content",
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+}
