@@ -4,14 +4,25 @@ import { InputSystem } from './input/index.js'
 import { Scene } from './core/scene.js'
 import { Tweens } from './core/tweens.js'
 import { UserInterface } from './ui/index.js'
+import { SystemBase } from './core/system-base.js'
 
 import { disposables } from './utils/disposables.js'
 import EventEmitter from 'eventemitter3'
 
-export class Zenith {
-    static DeltaFactor = 1 / 1000
+/**
+ * @class Zenith Engine
+ * @classdesc The main class of the engine.
+ * 
+ * @event update - Fired every frame
+ * @event update:before - Fired before the update
+ * @event update:after - Fired after the update
+ */
+export class Zenith extends SystemBase {
+    static get DeltaFactor() { return 1 / 1000 }
 
     constructor() {
+        super()
+
         this.update = this.update.bind(this)
 
         this.isRunning = false
