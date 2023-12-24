@@ -1,8 +1,8 @@
-import { EntityComponentSystem } from './ecs/index.js'
+import { EntityComponentSystem } from './ecs/entity-component-system.js'
 import { Graphics } from './graphics/index.js'
-import { InputSystem } from './input/index.js'
+import { InputManager } from './input/input-manager.js'
 import { Scene } from './core/scene.js'
-import { Tweens } from './core/tweens.js'
+import { TweensManager } from './core/tweens-manager.js'
 import { UserInterface } from './ui/index.js'
 import { SystemBase } from './core/system-base.js'
 
@@ -49,31 +49,42 @@ export class Zenith extends SystemBase {
             ...options
         }
 
+        /**
+         * @type {EventEmitter}
+         */
         this.events = new EventEmitter()
+
+        /**
+         * @type {Scene}
+         */
         this.scene = this.disposables.add(new Scene())
 
-        this.addModule(new Graphics())
+        /**
+         * @type {Graphics}
+         */
+        this.graphics = this.addModule(new Graphics())
 
-        // Todo: All systems should be a SystemBase class that has init() and dispose() methods
-        // - init() should be called when all systems are added to the engine
+        /**
+         * @type {InputManager}
+         */
+        this.input = this.addModule(new InputManager())
 
-        this.modulesList.forEach(module => {
-            if (this[module.module_name])
-                throw new Error(`Conflicting engine namespace for module ${module.module_name}`) 
+        /**
+         * @type {EntityComponentSystem}
+         */
+        this.ecs = this.addModule(new EntityComponentSystem())
 
-            this[module.module_name] = module
-        })
+        /**
+         * @type {UserInterface}
+         */
+        this.ui = this.addModule(new UserInterface())
+
+        /**
+         * @type {TweensManager}
+         */
+        this.tweens = this.addModule(new TweensManager())
 
         this.modulesList.forEach(module => module.init(this))
-
-        // this.graphics = this.disposables.add(new Graphics(container, this.scene))
-        this.input = this.disposables.add(new InputSystem())
-        this.ecs = this.disposables.add(new EntityComponentSystem())
-        this.ui = this.disposables.add(new UserInterface())
-        this.tweens = this.disposables.add(new Tweens())
-
-        this.input.init(this)
-        this.ui.init(this)
 
         window.addEventListener('blur', this.onBlur, false)
         window.addEventListener('focus', this.onFocus, false)

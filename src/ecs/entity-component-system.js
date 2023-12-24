@@ -1,6 +1,7 @@
 
 import { Entity } from './entity'
 import { createSimpleIdGenerator } from '../utils/id'
+import { SystemModule } from '../core/system-module'
 
 function getMissingSystems(systems, types) {
     return systems.reduce((acc, system) => {
@@ -22,16 +23,12 @@ function getMissingSystems(systems, types) {
  * 
  */
 
-export class EntityComponentSystem {
-    constructor() {
+export class EntityComponentSystem extends SystemModule {
+    init() {
         this.idGenerator = createSimpleIdGenerator()
         this.entities = []
         this.systems = []
         this.activeSystems = []
-    }
-
-    init() {
-
     }
 
     dispose() {

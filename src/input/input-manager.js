@@ -12,7 +12,7 @@ const setRelativeCursorPosition = (position, cursorX, cursorY, windowWidth, wind
  * @event key:down - Fired when a key is pressed
  * @event key:up - Fired when a key is released
  */
-export class InputSystem extends SystemBase {
+export class InputManager extends SystemBase {
     init(engine) {
         this.engine = engine
         this.shortcuts = new ShortcutHandler(this.engine)

@@ -1,9 +1,9 @@
 import * as Three from 'three'
-import { SystemBase } from "../core/system-base"
 
 import UIElements from './elements'
 import UIStyles from './styles'
 
+import { SystemModule } from '../core/system-module'
 export { UIStyles }
 
 /**
@@ -16,7 +16,7 @@ export { UIStyles }
  * 
  */
 
-export class UserInterface extends SystemBase {
+export class UserInterface extends SystemModule {
     init(engine) {
         const { renderer, camera, scene, canvasWidth, canvasHeight } = engine.graphics
 

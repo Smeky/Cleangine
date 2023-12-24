@@ -1,18 +1,21 @@
 import { Tween } from "./tween"
+import { SystemModule } from "./system-module"
 
-export class Tweens {
-    static Easing = {
-        Linear: (t) => t,
-        Quadratic: (t) => t * (2 - t),
-        Quintic: (t) => t * t * t * (t * (t * 6 - 15) + 10),
-        EaseIn: (t) => t * t,
-        EaseOut: (t) => t * (2 - t),
-        EaseInOut: (t) => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+export class TweensManager extends SystemModule {
+    static get Easing() {
+        return {
+            Linear: (t) => t,
+            Quadratic: (t) => t * (2 - t),
+            Quintic: (t) => t * t * t * (t * (t * 6 - 15) + 10),
+            EaseIn: (t) => t * t,
+            EaseOut: (t) => t * (2 - t),
+            EaseInOut: (t) => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+        }
     }
 
-    constructor() {
+    init() {
         this.tweens = []
-        this.Easing = Tweens.Easing
+        this.Easing = TweensManager.Easing
     }
 
     dispose() {

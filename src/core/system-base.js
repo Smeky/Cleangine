@@ -29,10 +29,12 @@ export class SystemBase extends EventEmitter {
 
     /**
      * Adds a module to the system.
-     * @param {Object} module - The module to add.
+     * @param {SystemModule<T>} module - The module to add.
      * @param {number} [index=-1] - The index at which to add the module.
-     * @throws {Error} If the module does not have a name.
      * @throws {Error} If the module is already registered.
+     * 
+     * @returns {SystemModule<T>} The added module.
+     * @template T - The class that extends SystemModule.
      */
     addModule(module, index = -1) {
         const name = camelToKebab(module.constructor.name)
@@ -40,10 +42,17 @@ export class SystemBase extends EventEmitter {
         if (this.modules[name])
         throw new Error(`Module ${name} already registered`)
     
-    // Todo: Can't this be done in the module constructor?
+        // Todo: Can't this be done in the module constructor?
         module.module_name = name
         this.modules[name] = module
-        this.modulesList.splice(index, 0, module)
+
+        if (index === -1)
+            this.modulesList.push(module)
+        else
+            // Even though -1 should always add to the end, it doesn't atm. So we need to check for it.
+            this.modulesList.splice(index, 0, module)
+
+        return module
     }
 
     /**
