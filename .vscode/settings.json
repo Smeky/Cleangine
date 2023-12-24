@@ -7,7 +7,7 @@
         "**/.output": true,
         "**/.git": true,
     },
-    "window.title": "Cleangine ${separator}${activeEditorShort}",
+    "window.title": "Zenith ${separator}${activeEditorShort}",
     "vue.codeActions.enabled": false,
     "search.useIgnoreFiles": false,
     "github.copilot.enable": {

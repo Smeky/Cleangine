@@ -1,5 +1,11 @@
 # List of things To Do
 
+## Tests
+- [ ] Setup test environment
+- [ ] Tests for `core` files that are cosidered stable
+- [ ] Tests for `scene` files that are cosidered stable
+- [ ] Tests for `utils` files
+
 ## Engine
 
 - [ ] Every important class should have explicit name file. (e.g. `class Game` should be in `game.js` file, not `index.js`)

@@ -10,6 +10,14 @@ import { disposables } from './utils/disposables.js'
 import EventEmitter from 'eventemitter3'
 
 /**
+ * @typedef {Object} ZenithOptions
+ * @property {HTMLElement} container
+ */
+export const ZenithOptions = {
+    container: document.body
+}
+
+/**
  * @class Zenith Engine
  * @classdesc The main class of the engine.
  * 
@@ -33,21 +41,37 @@ export class Zenith extends SystemBase {
 
     /**
      * 
-     * @param {Object} options 
-     * @param {HTMLElement} options.container
+     * @param {ZenithOptions} options 
      */
-    setup({ container }) {
+    setup(options = {}) {
+        this.options = {
+            ...ZenithOptions,
+            ...options
+        }
+
         this.events = new EventEmitter()
         this.scene = this.disposables.add(new Scene())
-        this.graphics = this.disposables.add(new Graphics(container, this.scene))
+
+        this.addModule(new Graphics())
+
+        // Todo: All systems should be a SystemBase class that has init() and dispose() methods
+        // - init() should be called when all systems are added to the engine
+
+        this.modulesList.forEach(module => {
+            if (this[module.module_name])
+                throw new Error(`Conflicting engine namespace for module ${module.module_name}`) 
+
+            this[module.module_name] = module
+        })
+
+        this.modulesList.forEach(module => module.init(this))
+
+        // this.graphics = this.disposables.add(new Graphics(container, this.scene))
         this.input = this.disposables.add(new InputSystem())
         this.ecs = this.disposables.add(new EntityComponentSystem())
         this.ui = this.disposables.add(new UserInterface())
         this.tweens = this.disposables.add(new Tweens())
 
-        // Todo: All systems should be a SystemBase class that has init() and dispose() methods
-        // - init() should be called when all systems are added to the engine
-        
         this.input.init(this)
         this.ui.init(this)
 

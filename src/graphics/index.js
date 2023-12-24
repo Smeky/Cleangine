@@ -1,22 +1,21 @@
 import * as Three from 'three'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { OrbitControls } from 'three/addons/controls/OrbitControls'
 
+import { SystemModule } from '../core/system-module'
 import { Camera } from './camera'
 
 /**
  * Graphics class for rendering 3D graphics using Three.js library.
  */
-export class Graphics {
+export class Graphics extends SystemModule {
     /**
      * Creates a new Graphics instance.
-     * @param {HTMLElement} container - The HTML element that will contain the canvas.
-     * @param {Three.Scene} scene - The Three.js scene to be rendered.
+     * 
+     * @param {@import { Zenith } from '../zenith.js'} engine - The engine instance.
      */
-    constructor(container, scene) {
-        console.assert(container instanceof HTMLElement, 'Graphics: container must be an HTMLElement')
-
+    init(engine) {
         // Canvas
-        this.container = container
+        this.container = engine.options.container
         this.canvasWidth = this.container.offsetWidth
         this.canvasHeight = this.container.offsetHeight
 
@@ -33,7 +32,7 @@ export class Graphics {
         this.raycaster = new Three.Raycaster()
         
         // Scene
-        this.scene = scene
+        this.scene = engine.scene
 
         // Camera
         this.camera = new Camera(75, this.canvasWidth / this.canvasHeight, 0.1, 5000)

@@ -1,4 +1,5 @@
 import EventEmitter from './event-emitter'
+import { camelToKebab } from '../utils/string/cambel-to-kebab'
 
 /**
  * SystemBase class that extends EventEmitter. Holds a list of modules and provides methods for adding and removing them.
@@ -34,16 +35,16 @@ export class SystemBase extends EventEmitter {
      * @throws {Error} If the module is already registered.
      */
     addModule(module, index = -1) {
-        if (!module.constructor.name)
-            throw new Error('Module must have a name')
-
-        if (this.modules[module.constructor.name])
-            throw new Error(`Module ${module.constructor.name} already registered`)
-
-        this.modules[module.constructor.name] = module
+        const name = camelToKebab(module.constructor.name)
+        
+        if (this.modules[name])
+        throw new Error(`Module ${name} already registered`)
+    
+    // Todo: Can't this be done in the module constructor?
+        module.module_name = name
+        this.modules[name] = module
         this.modulesList.splice(index, 0, module)
     }
-
 
     /**
      * Removes a module from the system.
@@ -54,7 +55,7 @@ export class SystemBase extends EventEmitter {
         if (!this.modules[name])
             throw new Error(`Tried to remove module ${name} that is not registered`)
 
-        const index = this.modulesList.findIndex(module => module.constructor.name === name)
+        const index = this.modulesList.findIndex(module => module.module_name === name)
         if (index !== -1) {
             this.modulesList.splice(index, 1)
         }
