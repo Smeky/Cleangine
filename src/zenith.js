@@ -49,39 +49,20 @@ export class Zenith extends SystemBase {
             ...options
         }
 
-        /**
-         * @type {EventEmitter}
-         */
+        /** @type {EventEmitter} */
         this.events = new EventEmitter()
-
-        /**
-         * @type {Scene}
-         */
+        /** @type {Scene} */
         this.scene = this.disposables.add(new Scene())
-
-        /**
-         * @type {Graphics}
-         */
+        
+        /** @type {Graphics} */
         this.graphics = this.addModule(new Graphics())
-
-        /**
-         * @type {InputManager}
-         */
+        /** @type {InputManager} */
         this.input = this.addModule(new InputManager())
-
-        /**
-         * @type {EntityComponentSystem}
-         */
+        /** @type {EntityComponentSystem} */
         this.ecs = this.addModule(new EntityComponentSystem())
-
-        /**
-         * @type {UserInterface}
-         */
+        /** @type {UserInterface} */
         this.ui = this.addModule(new UserInterface())
-
-        /**
-         * @type {TweensManager}
-         */
+        /** @type {TweensManager} */
         this.tweens = this.addModule(new TweensManager())
 
         this.modulesList.forEach(module => module.init(this))
