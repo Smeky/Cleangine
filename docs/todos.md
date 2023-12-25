@@ -13,12 +13,16 @@
 - [ ] Tests for `utils` files
 
 ## Engine
-- [ ] Every important class should have explicit name file. (e.g. `class Game` should be in `game.js` file, not `index.js`)
-- [ ] Create Scene class as an interface for 2D and 3D scenes
-- [ ] Create 2D Scene class
-- [ ] Refactor 3D Scene class
+- [x] Every important class should have explicit name file. (e.g. `class Game` should be in `game.js` file, not `index.js`)
+- [ ] Create Scene class as an interface to support 2D and 3D scenes
+  - Or figure out different solution to be able to add 2D and 3D scenes to the engine
 - [ ] Add `Game` base class to `engine` namespace
 - [x] Fix all EventEmitter related functionality as the emitter has been changed
+
+## Add 2D
+- [ ] create namespace for both 2D and 3D
+- [ ] move 3d to `/3d` namespace
+- [ ] create `2d` namespace and reflect 3D structure
 
 ## Assets
 - [ ] Add `AssetManager` class to `engine` namespace

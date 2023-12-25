@@ -1,9 +1,9 @@
 import { EntityComponentSystem } from './ecs/entity-component-system'
-import { Graphics } from './graphics/index'
+import { Graphics } from './graphics/graphics'
 import { InputManager } from './input/input-manager'
 import { Scene } from './core/scene'
 import { TweensManager } from './core/tweens-manager'
-import { UserInterface } from './ui/index'
+import { UserInterface } from './ui/user-interface'
 import { SystemBase } from './core/system-base'
 import { EventEmitter } from './core/eventemitter'
 
