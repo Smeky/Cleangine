@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "eventemitter3": "^5.0.1",
+    "pixi.js": "^7.3.2",
     "three": "^0.160.0"
   }
 }

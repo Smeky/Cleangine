@@ -37,22 +37,22 @@ export class Application {
         this.engine = this.disposables.add(new Zenith())
         this.assets = this.disposables.add(new AssetManager())
 
-        this.engine.setup({ container })
+        this.engine.setup({ container, renderingMode: '2d' })
         this.engine.events.on('update', this.update.bind(this))
 
         // this.engine.ecs.registerSystems(Systems)
 
-        await this.assets.loadAssets({
-            'cube': ['/models/cube.glb', (obj) => obj.scene],
-        })
+        // await this.assets.loadAssets({
+        //     'cube': ['/models/cube.glb', (obj) => obj.scene],
+        // })
 
-        this.camera.position.x = 0
-        this.camera.position.y = 2
-        this.camera.position.z = 3
-        this.controls.autoRotate = false
+        // this.camera.position.x = 0
+        // this.camera.position.y = 2
+        // this.camera.position.z = 3
+        // this.controls.autoRotate = false
         
-        this.cube = this.assets.get('cube').clone()
-        this.scene.add(this.cube)
+        // this.cube = this.assets.get('cube').clone()
+        // this.scene.add(this.cube)
     }
 
     dispose() {
@@ -73,7 +73,7 @@ export class Application {
      * @param {Number} time 
      */
     update(delta, time) {
-        this.cube.rotation.y += delta * 0.5
+        // this.cube.rotation.y += delta * 0.5
     }
 
     setScene(sceneDefinition, options = {}) {

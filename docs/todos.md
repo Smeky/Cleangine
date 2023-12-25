@@ -28,3 +28,7 @@
 - [ ] Add `AssetManager` class to `engine` namespace
 - [ ] `AssetLoader`s should be each a separate file and ideally just a function
 - [ ] Autoload `AssetLoader`s from `engine/assets/loaders` directory by type when needed (when assets of their type get loaded)
+
+## User Interface
+- [ ] Refactor UI to support both 2D and 3D rendering 
+  - Goal here is to save as much work as possible when adding 2D support

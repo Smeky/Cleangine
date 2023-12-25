@@ -1,13 +1,13 @@
 import * as Three from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls'
 
-import { SystemModule } from '../core/system-module'
+import { SystemModule } from '../../core/system-module'
 import { Camera } from './camera'
 
 /**
  * Graphics class for rendering 3D graphics using Three.js library.
  */
-export class Graphics extends SystemModule {
+export class Graphics3D extends SystemModule {
     /**
      * Creates a new Graphics instance.
      * 
@@ -81,7 +81,7 @@ export class Graphics extends SystemModule {
      * Updates the Graphics instance with the given delta time.
      * @param {number} delta - The time elapsed since the last update.
      */
-    update(delta) {
+    update() {
         this.controls.update(delta)
         this.renderer.clear()
         this.renderer.render(this.scene, this.camera)

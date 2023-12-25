@@ -1,5 +1,6 @@
 import { EntityComponentSystem } from './ecs/entity-component-system'
-import { Graphics } from './graphics/graphics'
+import { Graphics3D } from './graphics/3d/graphics'
+import { Graphics2D } from './graphics/2d/graphics'
 import { InputManager } from './input/input-manager'
 import { Scene } from './core/scene'
 import { TweensManager } from './core/tweens-manager'
@@ -12,9 +13,11 @@ import { disposables } from './utils/disposables'
 /**
  * @typedef {Object} ZenithOptions
  * @property {HTMLElement} container
+ * @property {String} mode - '2d' or '3d'. Default: '3d'
  */
 export const ZenithOptions = {
-    container: document.body
+    container: document.body,
+    renderingMode: '3d',
 }
 
 /**
@@ -54,14 +57,24 @@ export class Zenith extends SystemBase {
         /** @type {Scene} */
         this.scene = this.disposables.add(new Scene())
         
-        /** @type {Graphics} */
-        this.graphics = this.addModule(new Graphics())
+        if (this.options.renderingMode === '3d') {
+            /** @type {Graphics3D} */
+            this.graphics = this.addModule(new Graphics3D())
+        }
+        else if (this.options.renderingMode === '2d') {
+            /** @type {Graphics2D} */
+            this.graphics = this.addModule(new Graphics2D())
+        }
+        else {
+            throw new Error(`Invalid rendering mode: ${this.options.renderingMode}`)
+        }
+
         /** @type {InputManager} */
         this.input = this.addModule(new InputManager())
         /** @type {EntityComponentSystem} */
         this.ecs = this.addModule(new EntityComponentSystem())
         /** @type {UserInterface} */
-        this.ui = this.addModule(new UserInterface())
+        // this.ui = this.addModule(new UserInterface())
         /** @type {TweensManager} */
         this.tweens = this.addModule(new TweensManager())
 
@@ -110,7 +123,7 @@ export class Zenith extends SystemBase {
         this.events.emit('update', this.delta, time)
 
         this.graphics.update(this.delta, time)
-        this.ui.update(this.delta, time)
+        // this.ui.update(this.delta, time)
 
         // Not needed atm
         // this.events.emit('update:after', this.delta, time)

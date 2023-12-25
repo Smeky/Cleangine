@@ -1,5 +1,12 @@
 import * as Three from 'three'
 
+/**
+ * Scene class for managing 3D objects in a Three.js scene.
+ * 
+ * Todo:
+ *  - Move and rename to 3D namespace
+ *  - Add loadFromData method to load scene data & modules from json data
+ */
 export class Scene extends Three.Scene {
     constructor() { 
         super(...arguments)
