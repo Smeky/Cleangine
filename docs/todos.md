@@ -1,8 +1,14 @@
 # List of things To Do
 
 ## Tests
-- [ ] Setup test environment
+- [x] Setup test environment
 - [ ] Tests for `core` files that are cosidered stable
+  - [x] `eventemitter.js`
+  - [ ] `system-base.js`
+  - [ ] `system.js`
+  - [ ] `system-module.js`
+  - [ ] `scene.js`
+  - [ ] `scene-module.js`
 - [ ] Tests for `scene` files that are cosidered stable
 - [ ] Tests for `utils` files
 
