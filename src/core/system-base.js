@@ -1,4 +1,4 @@
-import EventEmitter from './event-emitter'
+import { EventEmitter } from './eventemitter'
 import { camelToKebab } from '../utils/string/cambel-to-kebab'
 
 /**

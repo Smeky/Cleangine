@@ -1,5 +1,5 @@
-import { SystemBase } from '../core/system-base.js'
-import { ShortcutHandler } from './shortcut-handler.js'
+import { SystemBase } from '../core/system-base'
+import { ShortcutHandler } from './shortcut-handler'
 
 const setRelativeCursorPosition = (position, cursorX, cursorY, windowWidth, windowHeight) => {
     position.x = (cursorX / windowWidth) * 2 - 1
