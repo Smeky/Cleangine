@@ -2,6 +2,7 @@ import * as Three from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls'
 
 import { SystemModule } from '../../core/system-module'
+import { Scene } from '../../core/scene'
 import { Camera } from './camera'
 
 /**
@@ -36,7 +37,7 @@ export class Graphics3D extends SystemModule {
 
         // Camera
         this.camera = new Camera(75, this.canvasWidth / this.canvasHeight, 0.1, 5000)
-        this.scene.add(this.camera)
+        this.scene.addChild(this.camera)
 
         // Lights
         this.directionalLight = new Three.DirectionalLight(0xffffff, 3)
@@ -48,8 +49,8 @@ export class Graphics3D extends SystemModule {
 
         this.ambientLight = new Three.AmbientLight(0xffffff, 1)
 
-        this.scene.add(this.directionalLight)
-        this.scene.add(this.ambientLight)
+        this.scene.addChild(this.directionalLight)
+        this.scene.addChild(this.ambientLight)
 
         this.controls = new OrbitControls(this.camera, this.canvas)
         this.controls.enableDamping = true
@@ -81,10 +82,14 @@ export class Graphics3D extends SystemModule {
      * Updates the Graphics instance with the given delta time.
      * @param {number} delta - The time elapsed since the last update.
      */
-    update() {
+    update(delta) {
         this.controls.update(delta)
         this.renderer.clear()
-        this.renderer.render(this.scene, this.camera)
+        this.renderer.render(this.scene.container, this.camera)
+    }
+
+    createScene() {
+        return new Scene({ container: new Three.Scene() })
     }
 
     /**

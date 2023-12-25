@@ -52,7 +52,7 @@ export class Application {
         // this.controls.autoRotate = false
         
         // this.cube = this.assets.get('cube').clone()
-        // this.scene.add(this.cube)
+        // this.scene.addChild(this.cube)
     }
 
     dispose() {

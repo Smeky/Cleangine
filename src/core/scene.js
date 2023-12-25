@@ -1,28 +1,35 @@
-import * as Three from 'three'
+import { System } from "./system"
 
 /**
- * Scene class for managing 3D objects in a Three.js scene.
- * 
- * Todo:
- *  - Move and rename to 3D namespace
- *  - Add loadFromData method to load scene data & modules from json data
+ * This is the 3D Scene claas.
  */
-export class Scene extends Three.Scene {
-    constructor() { 
-        super(...arguments)
-        this.modules = {}
-        this.modulesList = []
+export class Scene extends System {
+    constructor({ container }) { 
+        super()
+
+        console.assert(container, 'Scene requires container. Scene container can be created by the Graphics module.')
+
+        this.container = container
     }
 
-    add(...objects) {
-        super.add(...objects)
+    addChild(...objects) {
+        this.container.add(...objects)
         return objects.length === 1 ? objects[0] : objects
     }
 
-    update(delta, time) {
-        this.modulesList.forEach(module => module.update(delta, time))
+    removeChild(...objects) {
+        this.container.remove(...objects)
+        return objects.length === 1 ? objects[0] : objects
+    }
+    
+    addModule(module) {
+        console.assert(module?.isSceneModule, 'Scene module must be an instance of SceneModule')
+        super.addModule(...arguments)
     }
 
+    // Todo: 
+    //  - Obsolote, use addModule and init() instead
+    //  - Scene should handle data() function before init() is called
     setSceneFromModules(modules, options = {}) {
         this.modulesList.forEach(module => module.dipose())
         this.modulesList = []

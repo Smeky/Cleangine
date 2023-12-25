@@ -1,5 +1,9 @@
 # List of things To Do
 
+## Playground
+- [ ] Add navbar to the playground
+- [ ] Add a way to switch between 2d and 3d scene (can be pages with different apps for now)
+
 ## Tests
 - [x] Setup test environment
 - [ ] Tests for `core` files that are cosidered stable
@@ -18,6 +22,8 @@
   - Or figure out different solution to be able to add 2D and 3D scenes to the engine
 - [ ] Add `Game` base class to `engine` namespace
 - [x] Fix all EventEmitter related functionality as the emitter has been changed
+- [ ] `Application` class should become a base class for app-specific logic (e.g. `Game` class)
+- [ ] `Application` class should be the base ground for all the logic that scene modules can't, such as loading state, logic for changing scenes, etc.
 
 ## Add 2D
 - [ ] create namespace for both 2D and 3D

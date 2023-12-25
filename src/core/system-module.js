@@ -5,7 +5,10 @@
  * @classdesc Base class for all system modules.
  */
 export class SystemModule {
-    static name = 'unnamed-system-module'
+    constructor() {
+        if (arguments.length)
+            throw new Error('SystemModule constructor does not accept arguments. Use the init() method instead.')
+    }
 
     /**
      * @abstract 

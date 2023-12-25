@@ -27,7 +27,7 @@ export class UserInterface extends SystemModule {
         this.worldScene = scene
         this.camera = new Three.OrthographicCamera(-canvasWidth / 2, canvasWidth / 2, canvasHeight / 2, -canvasHeight / 2, -10000, 10000)
         this.scene = new Three.Scene()
-        this.scene.add(this.camera)
+        this.scene.addChild(this.camera)
 
         this.raycaster = new Three.Raycaster()
         this.interactiveElements = []
@@ -43,8 +43,8 @@ export class UserInterface extends SystemModule {
 
         this.ambientLight = new Three.AmbientLight(0xffffff, 1)
 
-        this.scene.add(this.directionalLight)
-        this.scene.add(this.ambientLight)
+        this.scene.addChild(this.directionalLight)
+        this.scene.addChild(this.ambientLight)
 
         this.engine.input.addEventListener('cursor:move', this.onCursorMove)
         this.engine.input.addEventListener('cursor:click', this.onCursorClick)
@@ -81,7 +81,7 @@ export class UserInterface extends SystemModule {
      */
     createElement(type = 'element', options = {}) {
         const element = new UIElements[type](this, options)
-        this.scene.add(element)
+        this.scene.addChild(element)
         
         return element
     }

@@ -1,6 +1,7 @@
 import * as Pixi from 'pixi.js'
 
 import { SystemModule } from '../../core/system-module'
+import { Scene } from '~/src/core/scene'
 // import { Camera } from './camera' // Adjust this for 2D as needed.
 
 /**
@@ -24,7 +25,8 @@ export class Graphics2D extends SystemModule {
 
         this.container.appendChild(this.renderer.view)
 
-        this.scene = new Pixi.Container() // Todo
+        // Scene
+        this.scene = engine.scene
         
         // Todo: Camera setup for 2D
 
@@ -37,9 +39,11 @@ export class Graphics2D extends SystemModule {
     }
 
     update() {
-        // Manual rendering call
-        // console.log('2D update', this.renderer, this.scene)
-        this.renderer.render(this.scene)
+        this.renderer.render(this.scene.container)
+    }
+
+    createScene() {
+        return new Scene({ container: new Pixi.Container() })
     }
 
     onResize = () => {

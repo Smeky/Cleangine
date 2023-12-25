@@ -8,8 +8,6 @@ import { UserInterface } from './ui/user-interface'
 import { SystemBase } from './core/system-base'
 import { EventEmitter } from './core/eventemitter'
 
-import { disposables } from './utils/disposables'
-
 /**
  * @typedef {Object} ZenithOptions
  * @property {HTMLElement} container
@@ -39,7 +37,6 @@ export class Zenith extends SystemBase {
         this.isRunning = false
         this.lastFrameTime = 0
         this.delta = 0
-        this.disposables = disposables()
     }
 
     /**
@@ -51,11 +48,7 @@ export class Zenith extends SystemBase {
             ...ZenithOptions,
             ...options
         }
-
-        /** @type {EventEmitter} */
-        this.events = new EventEmitter()
-        /** @type {Scene} */
-        this.scene = this.disposables.add(new Scene())
+        
         
         if (this.options.renderingMode === '3d') {
             /** @type {Graphics3D} */
@@ -78,6 +71,13 @@ export class Zenith extends SystemBase {
         /** @type {TweensManager} */
         this.tweens = this.addModule(new TweensManager())
 
+
+        /** @type {EventEmitter} */
+        this.events = new EventEmitter()
+        /** @type {Scene} */
+        this.scene = this.graphics.createScene()
+
+        // Initialize modules
         this.modulesList.forEach(module => module.init(this))
 
         window.addEventListener('blur', this.onBlur, false)
@@ -86,7 +86,6 @@ export class Zenith extends SystemBase {
 
     dispose() {
         this.events.removeAllListeners()
-        this.disposables.dispose()
     }
 
     start() {
