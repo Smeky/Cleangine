@@ -1,5 +1,6 @@
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { ObjectLoader } from 'three'
+import { SystemModule } from '../core/system-module'
 
 const getAssetPath = (asset) => {
     if (typeof asset === 'function')
@@ -38,8 +39,12 @@ const getFunctionAssets = (assets) => {
     }, {})
 }
 
-export class AssetManager {
-    constructor() {
+export class AssetManager extends SystemModule {
+    init() {
+        this.items = {}
+    }
+
+    dispose() {
         this.items = {}
     }
 
@@ -76,9 +81,5 @@ export class AssetManager {
         Object.entries(functionAssets).forEach(([id, asset]) => {
             this.items[id] = asset()
         })
-    }
-
-    dispose() {
-
     }
 }

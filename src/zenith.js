@@ -1,12 +1,13 @@
+import { AssetManager } from './assets/asset-manager'
 import { EntityComponentSystem } from './ecs/entity-component-system'
-import { Graphics3D } from './graphics/3d/graphics'
+import { EventEmitter } from './core/eventemitter'
 import { Graphics2D } from './graphics/2d/graphics'
+import { Graphics3D } from './graphics/3d/graphics'
 import { InputManager } from './input/input-manager'
 import { Scene } from './core/scene'
+import { SystemBase } from './core/system-base'
 import { TweensManager } from './core/tweens-manager'
 import { UserInterface } from './ui/user-interface'
-import { SystemBase } from './core/system-base'
-import { EventEmitter } from './core/eventemitter'
 
 /**
  * @typedef {Object} ZenithOptions
@@ -70,6 +71,8 @@ export class Zenith extends SystemBase {
         // this.ui = this.addModule(new UserInterface())
         /** @type {TweensManager} */
         this.tweens = this.addModule(new TweensManager())
+        /** @type {AssetManager} */
+        this.assets = this.addModule(new AssetManager())
 
 
         /** @type {EventEmitter} */

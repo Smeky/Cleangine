@@ -20,7 +20,6 @@
 - [x] Every important class should have explicit name file. (e.g. `class Game` should be in `game.js` file, not `index.js`)
 - [ ] Create Scene class as an interface to support 2D and 3D scenes
     - Or figure out different solution to be able to add 2D and 3D scenes to the engine
-- [ ] Add `Game` base class to `engine` namespace
 - [x] Fix all EventEmitter related functionality as the emitter has been changed
 - [ ] `Application`
     - [ ] Should become a base class for app-specific logic (e.g. `Game` class)

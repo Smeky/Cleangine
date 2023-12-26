@@ -1,5 +1,4 @@
 import { Zenith, ZenithOptions } from './zenith'
-import { AssetManager } from './asset-manager'
 
 // import { Systems } from '~/src/game/ecs/systems'
 // import Assets from '~/src/game/assets'
@@ -20,6 +19,7 @@ import { AssetManager } from './asset-manager'
  *  - Add a way to load assets from a scene definition
  */
 export class ZenithApplication {
+    get assets () { return this.engine.assets }
     get camera() { return this.engine.graphics.camera }
     get controls() { return this.engine.graphics.controls } // Should have an interace (some kind of input manager)
     get ecs() { return this.engine.ecs }
@@ -37,8 +37,6 @@ export class ZenithApplication {
      */
     async init(options) {
         this.engine = new Zenith()
-        this.assets = new AssetManager()
-
         this.engine.setup(options)
 
         // this.engine.ecs.registerSystems(Systems)
