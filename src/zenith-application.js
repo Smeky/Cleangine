@@ -33,25 +33,10 @@ export class ZenithApplication {
     /**
      * 
      * @param {ZenithOptions} options
-     * @param {HTMLElement} options.container
      */
     async init(options) {
         this.engine = new Zenith()
         this.engine.setup(options)
-
-        // this.engine.ecs.registerSystems(Systems)
-
-        // await this.assets.loadAssets({
-        //     'cube': ['/models/cube.glb', (obj) => obj.scene],
-        // })
-
-        // this.camera.position.x = 0
-        // this.camera.position.y = 2
-        // this.camera.position.z = 3
-        // this.controls.autoRotate = false
-        
-        // this.cube = this.assets.get('cube').clone()
-        // this.scene.addChild(this.cube)
 
         if (process.env.NODE_ENV === 'development') {
             console.info('Zenith Application created, available at <window.zenith>')
@@ -77,10 +62,6 @@ export class ZenithApplication {
     stop() {
         this.engine.stop()
     }
-
-    // update(delta, time) {
-    //     this.cube.rotation.y += delta * 0.5
-    // }
 
     // setScene(sceneDefinition, options = {}) {
     //     const modules = sceneDefinition.modules.reduce((acc, moduleName) => {
