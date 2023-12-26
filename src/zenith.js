@@ -88,12 +88,18 @@ export class Zenith extends SystemBase {
         this.events.removeAllListeners()
     }
 
+    /**
+     * Starts the engine's main loop.
+     */
     start() {
         this.isRunning = true
         this.lastFrameTime = 0
         window.requestAnimationFrame(this.update)
     }
 
+    /**
+     * Stops the engine's main loop.
+     */
     stop() {
         this.isRunning = false
     }

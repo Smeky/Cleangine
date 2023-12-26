@@ -1,20 +1,25 @@
-import { Zenith } from './zenith'
+import { Zenith, ZenithOptions } from './zenith'
 import { AssetManager } from './asset-manager'
-import { disposables } from './utils/disposables'
 
 // import { Systems } from '~/src/game/ecs/systems'
 // import Assets from '~/src/game/assets'
 // import SceneModules from '~/src/game/modules'
 // import Scenes from '~/src/game/definitions/scenes'
 
+/**
+ * @class ZenithApplication
+ * @classdesc The main application class that serves as the entry point for the game and also interface for the engine.
+ * 
+ * The Application is meant to be used either as such or to be class extended by the user.
+ * 
+ * Todo: (reflected in todos.md)
+ *  - Add a way to set the scene from modules
+ *  - Add a way to set the scene from a definition
+ *  - Add a clear way to set ECS systems
+ *  - Add a way to load assets from a definition (or a list of definitions)
+ *  - Add a way to load assets from a scene definition
+ */
 export class ZenithApplication {
-    constructor() { 
-        if (process.env.NODE_ENV === 'development') {
-            console.info('Zenith Application created, available at <window.zenith>')
-            window.zenith = this
-        }
-    }
-
     get camera() { return this.engine.graphics.camera }
     get controls() { return this.engine.graphics.controls } // Should have an interace (some kind of input manager)
     get ecs() { return this.engine.ecs }
@@ -27,18 +32,14 @@ export class ZenithApplication {
 
     /**
      * 
-     * @param {Object} options
+     * @param {ZenithOptions} options
      * @param {HTMLElement} options.container
      */
     async init(options) {
-        this.disposables = disposables()
-        // this.store = useGameStore()
-
-        this.engine = this.disposables.add(new Zenith())
-        this.assets = this.disposables.add(new AssetManager())
+        this.engine = new Zenith()
+        this.assets = new AssetManager()
 
         this.engine.setup(options)
-        this.engine.events.on('update', this.update.bind(this))
 
         // this.engine.ecs.registerSystems(Systems)
 
@@ -53,39 +54,46 @@ export class ZenithApplication {
         
         // this.cube = this.assets.get('cube').clone()
         // this.scene.addChild(this.cube)
+
+        if (process.env.NODE_ENV === 'development') {
+            console.info('Zenith Application created, available at <window.zenith>')
+            window.zenith = this
+        }
     }
 
     dispose() {
-        this.disposables.dispose()
+        this.engine.dispose()
+        this.assets.dispose()
     }
 
+    /**
+     * Starts the engine's main loop
+     */
     start() {
         this.engine.start()
     }
 
+    /**
+     * Stops the engine's main loop
+     */
     stop() {
         this.engine.stop()
     }
 
-    /**
-     * 
-     * @param {Number} delta 
-     * @param {Number} time 
-     */
-    update(delta, time) {
-        // this.cube.rotation.y += delta * 0.5
-    }
+    // update(delta, time) {
+    //     this.cube.rotation.y += delta * 0.5
+    // }
 
-    setScene(sceneDefinition, options = {}) {
-        const modules = sceneDefinition.modules.reduce((acc, moduleName) => {
-            if (!SceneModules[moduleName])
-                console.error(`Scene module "${moduleName}" does not exist`)
-            else
-                acc[moduleName] = SceneModules[moduleName]
+    // setScene(sceneDefinition, options = {}) {
+    //     const modules = sceneDefinition.modules.reduce((acc, moduleName) => {
+    //         if (!SceneModules[moduleName])
+    //             console.error(`Scene module "${moduleName}" does not exist`)
+    //         else
+    //             acc[moduleName] = SceneModules[moduleName]
 
-            return acc
-        }, {})
+    //         return acc
+    //     }, {})
 
-        this.scene.setSceneFromModules(modules, options)
-    }
+    //     this.scene.setSceneFromModules(modules, options)
+    // }
 }

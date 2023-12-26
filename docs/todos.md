@@ -7,23 +7,31 @@
 ## Tests
 - [x] Setup test environment
 - [ ] Tests for `core` files that are cosidered stable
-  - [x] `eventemitter.js`
-  - [ ] `system-base.js`
-  - [ ] `system.js`
-  - [ ] `system-module.js`
-  - [ ] `scene.js`
-  - [ ] `scene-module.js`
+    - [x] `eventemitter.js`
+    - [ ] `system-base.js`
+    - [ ] `system.js`
+    - [ ] `system-module.js`
+    - [ ] `scene.js`
+    - [ ] `scene-module.js`
 - [ ] Tests for `scene` files that are cosidered stable
 - [ ] Tests for `utils` files
 
 ## Engine
 - [x] Every important class should have explicit name file. (e.g. `class Game` should be in `game.js` file, not `index.js`)
 - [ ] Create Scene class as an interface to support 2D and 3D scenes
-  - Or figure out different solution to be able to add 2D and 3D scenes to the engine
+    - Or figure out different solution to be able to add 2D and 3D scenes to the engine
 - [ ] Add `Game` base class to `engine` namespace
 - [x] Fix all EventEmitter related functionality as the emitter has been changed
-- [ ] `Application` class should become a base class for app-specific logic (e.g. `Game` class)
-- [ ] `Application` class should be the base ground for all the logic that scene modules can't, such as loading state, logic for changing scenes, etc.
+- [ ] `Application`
+    - [ ] Should become a base class for app-specific logic (e.g. `Game` class)
+    - [ ] Should be the base ground for all the logic that scene modules can't, such as loading state, logic for changing scenes, etc.
+    - [ ] Add a way to set the scene from modules
+    - [ ] Add a way to set the scene from a definition
+    - [ ] Add a clear way to set ECS systems
+    - [ ] Add a way to load assets from a definition (or a list of definitions)
+    - [ ] Add a way to load assets from a scene definition
+- [ ] `Scene`
+    - [ ] Aren't modules technically controllers?
 
 ## Add 2D
 - [ ] create namespace for both 2D and 3D
@@ -37,4 +45,4 @@
 
 ## User Interface
 - [ ] Refactor UI to support both 2D and 3D rendering 
-  - Goal here is to save as much work as possible when adding 2D support
+    - Goal here is to save as much work as possible when adding 2D support
