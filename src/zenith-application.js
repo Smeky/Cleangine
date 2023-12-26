@@ -7,11 +7,11 @@ import { disposables } from './utils/disposables'
 // import SceneModules from '~/src/game/modules'
 // import Scenes from '~/src/game/definitions/scenes'
 
-export class Application {
+export class ZenithApplication {
     constructor() { 
         if (process.env.NODE_ENV === 'development') {
-            console.info('Application instance created, available at <window.app>')
-            window.app = this
+            console.info('Zenith Application created, available at <window.zenith>')
+            window.zenith = this
         }
     }
 
@@ -30,14 +30,14 @@ export class Application {
      * @param {Object} options
      * @param {HTMLElement} options.container
      */
-    async init({ container }) {
+    async init(options) {
         this.disposables = disposables()
         // this.store = useGameStore()
 
         this.engine = this.disposables.add(new Zenith())
         this.assets = this.disposables.add(new AssetManager())
 
-        this.engine.setup({ container, renderingMode: '2d' })
+        this.engine.setup(options)
         this.engine.events.on('update', this.update.bind(this))
 
         // this.engine.ecs.registerSystems(Systems)
@@ -89,6 +89,3 @@ export class Application {
         this.scene.setSceneFromModules(modules, options)
     }
 }
-
-const instance = new Application()
-export default instance
