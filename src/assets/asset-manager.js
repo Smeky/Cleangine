@@ -56,7 +56,7 @@ export class AssetManager extends SystemModule {
      */
     async loadAssets(assetsMap) {
         const mode = this.engine.options.renderingMode
-        const Loaders = await import('./loaders/' + mode).then(m => m.default)
+        const Loaders = await import(/* @vite-ignore */ './loaders/' + mode).then(m => m.default)
 
         for (const [id, def] of Object.entries(assetsMap)) {
             const { path, type, onLoad } = parseAssetDefinition(def)
