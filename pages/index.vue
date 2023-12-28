@@ -10,6 +10,10 @@ class App3D extends ZenithApplication {
     async init(options) {
         super.init(options)
 
+        // await this.assets.loadAssets({
+        //     'cube': ['/models/cube.glb', (obj) => obj.scene],
+        // })
+
         await this.assets.loadAssets({
             'cube': ['/models/cube.glb', (obj) => obj.scene],
         })

@@ -38,10 +38,23 @@
 - [ ] create `2d` namespace and reflect 3D structure
 
 ## Assets
-- [ ] Add `AssetManager` class to `engine` namespace
-- [ ] `AssetLoader`s should be each a separate file and ideally just a function
+- [x] Add `AssetManager` class to `engine` namespace
+- [x] `AssetLoader`s should be each a separate file and ideally just a function
 - [ ] Autoload `AssetLoader`s from `engine/assets/loaders` directory by type when needed (when assets of their type get loaded)
+- [ ] Create custom AssetLoader for loading individual assets (e.g. `AssetLoaderImage` for loading images)
+  - Mostly wraps around Three.js and Pixi.js loaders
+- [ ] Figure out a clean way to differentiate between asset types (e.g. `AssetType.Image`, `AssetType.Model`, etc.)
 
 ## User Interface
 - [ ] Refactor UI to support both 2D and 3D rendering 
     - Goal here is to save as much work as possible when adding 2D support
+
+## Debug
+- [ ] Add `Debug` class to `engine` namespace
+- [ ] Add custom logging functionality
+  - [ ] Should behave statically or as a singleton, not stored in the engine instance
+  - [ ] Should be able to specify loggin target (e.g. console, api, etc.)
+  - [ ] Add mild background to the log messages to make them distinguishable from the rest in the console
+
+## Technical Debt
+- [ ] All jsdoc type should be lowercase (e.g. `string` instead of `String`)

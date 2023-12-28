@@ -1,46 +1,46 @@
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
-import { ObjectLoader } from 'three'
 import { SystemModule } from '../core/system-module'
 
-const getAssetPath = (asset) => {
-    if (typeof asset === 'function')
-        return ''
+/**
+ * Parses an asset definition from various input formats.
+ * 
+ * @param {string|object|array} def - The asset definition. Can be:
+ *  - a string representing the path,
+ *  - an object with properties `path`, `type`, and `onLoad`,
+ *  - an array, where:
+ *    - 1 element is the path,
+ *    - 2 elements are path and onLoad,
+ *    - 3 elements are path, type, and onLoad.
+ * @returns {{path: string, type: string, onLoad: Function}} The parsed asset definition.
+ */
+const parseAssetDefinition = (def) => {
+    let path, type, onLoad
 
-    if (typeof asset === 'string')
-        return asset
+    if (typeof def === 'string') {
+        path = def
+    }
+    else if (Array.isArray(def)) {
+        if (def.length === 1)
+            path = def[0]
+        else if (def.length === 2)
+            [path, onLoad] = def
+        else if (def.length === 3)
+            [path, type, onLoad] = def
+    }
+    else if (typeof def === 'object') {
+        path = def.path
+        type = def.type
+        onLoad = def.onLoad
+    }
+    else {
+        throw new Error(`Invalid asset definition: ${def}`)
+    }
 
-    return asset[0]
-}
-
-const getGlbAssets = (assets) => {
-    return Object.entries(assets).reduce((acc, [id, asset]) => {
-        if (getAssetPath(asset).endsWith('.glb'))
-            acc[id] = asset
-    
-        return acc
-    }, {})
-}
-
-const getJsonAssets = (assets) => {
-    return Object.entries(assets).reduce((acc, [id, asset]) => {
-        if (getAssetPath(asset).endsWith('.json'))
-            acc[id] = asset
-    
-        return acc
-    }, {})
-}
-
-const getFunctionAssets = (assets) => {
-    return Object.entries(assets).reduce((acc, [id, asset]) => {
-        if (typeof asset === 'function')
-            acc[id] = asset
-    
-        return acc
-    }, {})
+    return { path, type, onLoad }
 }
 
 export class AssetManager extends SystemModule {
-    init() {
+    init(engine) {
+        this.engine = engine
         this.items = {}
     }
 
@@ -52,34 +52,19 @@ export class AssetManager extends SystemModule {
 
     /**
      * 
-     * @param {Object} assetList  An object with keys as asset ids and values as asset paths
+     * @param {Object} assetsMap  An object with keys as asset ids and values as asset paths
      */
-    async loadAssets(assetList) {
-        const loadAssetsUsingLoader = async(loader, assets) => {
-            const promises = Object.entries(assets).map(([id, asset]) => {
-                return new Promise((resolve, reject) => {
-                    const path = getAssetPath(asset)
-                    const onLoad = Array.isArray(asset) ? asset[1] : undefined
+    async loadAssets(assetsMap) {
+        const mode = this.engine.options.renderingMode
+        const Loaders = await import('./loaders/' + mode).then(m => m.default)
 
-                    loader.load(path, (data) => {
-                        this.items[id] = onLoad ? onLoad(data) : data
-                        resolve()
-                    })
-                })
-            })
+        for (const [id, def] of Object.entries(assetsMap)) {
+            const { path, type, onLoad } = parseAssetDefinition(def)
+            const ext = path.split('.').pop()
+            const loader = Loaders.getLoader(type ?? ext)
 
-            await Promise.all(promises)
+            const data = await loader.load(path)
+            this.items[id] = onLoad ? onLoad(data) : data
         }
-
-        const objLoader = new ObjectLoader()
-        await loadAssetsUsingLoader(objLoader, getJsonAssets(assetList))
-
-        const gltfLoader = new GLTFLoader()
-        await loadAssetsUsingLoader(gltfLoader, getGlbAssets(assetList))
-
-        const functionAssets = getFunctionAssets(assetList)
-        Object.entries(functionAssets).forEach(([id, asset]) => {
-            this.items[id] = asset()
-        })
     }
 }

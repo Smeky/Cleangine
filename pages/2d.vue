@@ -5,6 +5,7 @@
 <script setup>
 import { ZenithApplication } from '~/src/zenith-application'
 import { useZenithApp } from '~/composables/useZenithApp'
+import { Sprite } from 'pixi.js'
 
 class App2D extends ZenithApplication {
     async init(options) {
@@ -14,12 +15,15 @@ class App2D extends ZenithApplication {
             'square': '/sprites/square.jpg',
         })
 
-        // this.square = this.assets.get('square').clone()
-        // this.scene.addChild(this.square)
+        const texture = this.assets.get('square')
+        const square = this.scene.addChild(new Sprite(texture))
+        square.anchor.set(0.5)
+        square.x = this.graphics.canvasWidth / 2
+        square.y = this.graphics.canvasHeight / 2
 
-        // this.engine.events.on('update', (delta) => {
-        //     this.square.rotation += 0.5 * delta
-        // })
+        this.engine.events.on('update', (delta) => {
+            square.rotation += 0.5 * delta
+        })
     }
 }
 

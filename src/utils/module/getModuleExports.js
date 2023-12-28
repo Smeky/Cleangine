@@ -10,4 +10,4 @@ export const getModuleExports = (modules) => {
         acc[name] = module.default
         return acc
     }, {})
-}    
+}

@@ -13,12 +13,14 @@ export class Scene extends System {
     }
 
     addChild(...objects) {
-        this.container.add(...objects)
+        const addFn = this.container.add || this.container.addChild
+        addFn.bind(this.container)(...objects)
         return objects.length === 1 ? objects[0] : objects
     }
 
     removeChild(...objects) {
-        this.container.remove(...objects)
+        const removeFn = this.container.remove || this.container.removeChild
+        removeFn.bind(this.container)(...objects)
         return objects.length === 1 ? objects[0] : objects
     }
     
