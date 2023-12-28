@@ -59,3 +59,7 @@
 
 ## Technical Debt
 - [ ] All jsdoc type should be lowercase (e.g. `string` instead of `String`)
+
+## Documentation
+- [ ] Add a way to generate documentation from jsdoc
+- [ ] Automate documentation generation on build (or use workflow to generate it on push to master)
