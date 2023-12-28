@@ -31,6 +31,7 @@
     - [ ] Add a way to load assets from a scene definition
 - [ ] `Scene`
     - [ ] Aren't modules technically controllers?
+- [ ] Fix resize handling for both 2D and 3D
 
 ## Add 2D
 - [ ] create namespace for both 2D and 3D

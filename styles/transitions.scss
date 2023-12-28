@@ -1,0 +1,7 @@
+
+.fade-inout-enter-active, .fade-inout-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.fade-inout-enter, .fade-inout-leave-to {
+  opacity: 0;
+}
