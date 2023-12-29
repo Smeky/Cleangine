@@ -1,48 +1,68 @@
 # Zenith Engine
 
-<img src="./docs/zenith-logo.svg" alt="Alt text" width="200" height="200">
+<img src="./docs/zenith-logo.svg" alt="Alt text" width="200" height="200" style="pointer-events: none; user-select: none;"/>
 
-Zenith Engine is a game engine **or rather framework** for simple games & apps. It is built on top of [Three.js](https://threejs.org/) for 3D & [Pixi.js](https://www.pixijs.com/) for 2D.
-Currently, there is no user interface and all configuration is done through code. This is by design as I want to keep the engine as simple as possible from a programmer's perspective.
+Zenith Engine, not just a game engine but a framework, streamlines the development of simple games and apps. It leverages [Three.js](https://threejs.org/) for 3D graphics and [Pixi.js](https://www.pixijs.com/) for 2D, offering a robust foundation. 
 
-**DISCLAIMER:**
-It is my custom engine for my personal & work projects and as such is not meant to be a general purpose engine, however it is open source and you are free to use it for your own projects.
+**Note:** Configuration is code-based, intentionally omitting a UI for a lean, coder-friendly experience.
 
-My main goal with this project is to have well documented code with simple & easy to understand and extend architecture.
+**Disclaimer:** Primarily crafted for my personal and professional projects, Zenith Engine isn't your run-of-the-mill general purpose engine. However, it as an open-source project and you can feel free to adopt it for your endeavors.
 
-[Todos](./docs/todos.md)
-[Issues](./docs/issues.md)
+The essence of this project? Well-documented, straightforward code with an architecture that's a easy to comprehend and extend.
 
-## Getting Started
+- [Todo List](./docs/todos.md)
+- [Issues](./docs/issues.md)
+
+## Quick Start
 
 ```bash
 pnpm i
 pnpm dev
 ```
 
-## Engine Structure
-### Zenith
-Center of the engine, contains all the core systems as modules and the application interface. Handles the main loop.
+## Example usage
+```html
+<template>
+    <div class="zenith" ref="containerRef"></div>
+</template>
 
-**Modules**: (modules are a way to extend the engine with custom functionality. Each core system is a module)
+<script setup>
+import { ZenithApplication } from '~/src/zenith-application'
+import { useZenithApp } from '~/composables/useZenithApp'
 
-    zenith.ecs - entity component system
-    zenith.input - input handling
-    zenith.graphics - rendering
-    zenith.scene - scene management system
-    zenith.tweens - tweening
-    zenith.assets - asset management
-    zenith.audio - todo
-    zenith.networking - todo
+class App3D extends ZenithApplication {
+    async init(options) {
+        super.init(options)
 
-### Application
-Interface for the engine. You'll find access to everything you need from the engine here.
+        await this.assets.loadAssets({
+            'cube': ['/models/cube.glb', (obj) => obj.scene],
+        })
 
-### Scene
-Scene as such is just a simple system holding modules (or controllers if you will) that add the specific functionality needed by the scene. For example, enemy-spawner, player-controller, etc.
+        this.camera.position.x = 0
+        this.camera.position.y = 2
+        this.camera.position.z = 3
+        this.controls.autoRotate = false
+        
+        this.cube = this.assets.get('cube').clone()
+        this.scene.addChild(this.cube)
 
-**Scene Module** - todo
+        this.events.on('update', (delta) => {
+            this.cube.rotation.y += 0.5 * delta
+        })
+    }
+}
+
+const containerRef = ref(null)
+useZenithApp(containerRef, {
+    renderingMode: '3d',
+    application: App3D
+})
+</script>
+
+<style lang="scss">
+
+</style>
+```
 
 ## License
-
-MIT
+MIT License
