@@ -17,6 +17,9 @@
 - [ ] Tests for `scene` files that are cosidered stable
 - [ ] Tests for `utils` files
 
+## Math
+- Add custom implementation of Vector2 & Vector3 that wrap around Three.js and Pixi.js vectors
+
 ## Library
 - [ ] Make the engine into a library (installable via npm)
 
