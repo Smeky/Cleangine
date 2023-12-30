@@ -16,6 +16,9 @@
 - [ ] Tests for `scene` files that are cosidered stable
 - [ ] Tests for `utils` files
 
+## Library
+- [ ] Make the engine into a library (installable via npm)
+
 ## Engine
 - [x] Every important class should have explicit name file. (e.g. `class Game` should be in `game.js` file, not `index.js`)
 - [ ] Create Scene class as an interface to support 2D and 3D scenes

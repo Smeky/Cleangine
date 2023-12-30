@@ -1,7 +1,7 @@
 import * as Pixi from 'pixi.js'
 
 import { SystemModule } from '../../core/system-module'
-import { Scene } from '~/src/core/scene'
+import { Scene } from '../../core/scene'
 // import { Camera } from './camera' // Adjust this for 2D as needed.
 
 /**

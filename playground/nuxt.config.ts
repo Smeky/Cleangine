@@ -5,9 +5,13 @@ export default defineNuxtConfig({
 
     ssr: false,
 
-    modules: [
+    // modules: [
+    //     '@nuxtjs/alias',
+    // ],
 
-    ],
+    alias: {
+        'zenith': '../src',
+    },
 
     app: {
         head: {

@@ -1,9 +1,9 @@
 import { Zenith, ZenithOptions } from './zenith'
 
-// import { Systems } from '~/src/game/ecs/systems'
-// import Assets from '~/src/game/assets'
-// import SceneModules from '~/src/game/modules'
-// import Scenes from '~/src/game/definitions/scenes'
+// import { Systems } from 'zenith/game/ecs/systems'
+// import Assets from 'zenith/game/assets'
+// import SceneModules from 'zenith/game/modules'
+// import Scenes from 'zenith/game/definitions/scenes'
 
 /**
  * @class ZenithApplication

@@ -1,4 +1,6 @@
 import { SystemModule } from '../core/system-module'
+import Loaders2D from './loaders/2d'
+import Loaders3D from './loaders/3d'
 
 /**
  * Parses an asset definition from various input formats.
@@ -56,7 +58,7 @@ export class AssetManager extends SystemModule {
      */
     async loadAssets(assetsMap) {
         const mode = this.engine.options.renderingMode
-        const Loaders = await import(/* @vite-ignore */ './loaders/' + mode).then(m => m.default)
+        const Loaders = mode === '2d' ? Loaders2D : Loaders3D
 
         for (const [id, def] of Object.entries(assetsMap)) {
             const { path, type, onLoad } = parseAssetDefinition(def)

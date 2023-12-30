@@ -1,32 +1,27 @@
 {
-  "name": "zenith-engine",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "test": "jest"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.23.6",
-    "@babel/preset-env": "^7.23.6",
-    "@nuxt/devtools": "latest",
-    "@parcel/watcher": "^2.3.0",
-    "@types/node": "^20.10.5",
-    "babel-jest": "^29.7.0",
-    "jest": "^29.7.0",
-    "nuxt": "^3.8.2",
-    "sass": "^1.69.5",
-    "sass-loader": "^13.3.2",
-    "vue": "^3.3.12",
-    "vue-router": "^4.2.5"
-  },
-  "dependencies": {
-    "eventemitter3": "^5.0.1",
-    "pixi.js": "^7.3.2",
-    "three": "^0.160.0"
-  }
+    "name": "zenith-engine",
+    "private": true,
+    "type": "module",
+    "version": "0.0.1",
+    "main": "src/zenith.js",
+    "scripts": {
+        "build": "cd ./playground && pnpm run build",
+        "dev": "cd ./playground && pnpm run dev",
+        "generate": "cd ./playground && pnpm run generate",
+        "preinstall": "cd ./playground && pnpm install",
+        "postinstall": "cd ./playground && pnpm postinstall",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.23.6",
+        "@babel/preset-env": "^7.23.6",
+        "@types/node": "^20.10.5",
+        "babel-jest": "^29.7.0",
+        "jest": "^29.7.0"
+    },
+    "dependencies": {
+        "eventemitter3": "^5.0.1",
+        "pixi.js": "^7.3.2",
+        "three": "^0.160.0"
+    }
 }

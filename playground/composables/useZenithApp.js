@@ -1,4 +1,4 @@
-import { ZenithApplication } from "~/src/zenith-application"
+import { ZenithApplication } from "zenith/zenith-application"
 
 /**
  * 

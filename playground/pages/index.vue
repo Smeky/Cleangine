@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ZenithApplication } from '~/src/zenith-application'
+import { ZenithApplication } from 'zenith/zenith-application'
 import { useZenithApp } from '~/composables/useZenithApp'
 
 class App3D extends ZenithApplication {
