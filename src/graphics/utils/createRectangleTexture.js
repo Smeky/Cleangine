@@ -1,6 +1,4 @@
 
-import { CanvasTexture } from 'three'
-
 /**
  * 
  * @param {Object} options
@@ -12,6 +10,8 @@ import { CanvasTexture } from 'three'
  * @param {Number} [options.gradient.to] Color of the gradient end.
  * @param {Number} [options.gradient.angle] Angle of the gradient in radians.
  * @param {Number} [options.borderRadius] Border radius of the rectangle. Default is 0.
+ * 
+ * @returns {HTMLCanvasElement} Canvas element with the rectangle drawn on it.
  */
 export const createRectangleTexture = (options = {}) => {
     const { width = 1, height = 1, color = 0xffffff, gradient = null, borderRadius = 0 } = options
@@ -59,5 +59,5 @@ export const createRectangleTexture = (options = {}) => {
         context.fillRect(0, 0, width, height)
     }
 
-    return new CanvasTexture(canvas)
+    return canvas
 }

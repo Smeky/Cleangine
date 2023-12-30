@@ -3,6 +3,7 @@
 ## Playground
 - [ ] Add navbar to the playground
 - [ ] Add a way to switch between 2d and 3d scene (can be pages with different apps for now)
+- [ ] Add HMR handling to the playground
 
 ## Tests
 - [x] Setup test environment

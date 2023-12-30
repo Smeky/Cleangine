@@ -34,6 +34,7 @@ const props = defineProps({
 const navItems = [
     { label: '3D', path: '/' },
     { label: '2D', path: '/2d' },
+    { label: 'P', path: '/particles' },
 ]
 
 const onBurgerClick = () => {
