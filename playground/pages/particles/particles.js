@@ -18,9 +18,18 @@ export default class ParticlesApp extends ZenithApplication {
             speed: 100,
         }
 
-        for (let i = 0; i < this.particleDef.count; i++) {
-            this.particles.push(this.createParticle())
-        }
+        // for (let i = 0; i < this.particleDef.count; i++) {
+        //     this.particles.push(this.createParticle())
+        // }
+
+        setInterval(() => {
+            const part = this.createParticle()
+
+            setTimeout(() => {
+                part.destroy()
+            }, 4000)
+        }, 200)
+        
     }
 
     createParticle() {

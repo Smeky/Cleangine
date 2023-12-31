@@ -4,26 +4,6 @@ import { Entity } from './entity'
 import { SystemModule } from '../core/system-module'
 import Systems from './systems'
 
-function getMissingSystems(systems, names) {
-    return systems.reduce((acc, system) => {
-        const missing = system.dependencies.filter(dependency => !names.includes(dependency))
-        if (missing.length > 0) acc[system.type] = missing
-        return acc
-    }, {})
-}
-
-/**
- * Todo: Systems should be added dynamically by the ecs based on what components are present in the 
- * active entities. This way, we don't have to manually add systems to the ecs.
- * 
- * Todo: System should have a list of component names that it requires. If an entity doesn't have all of
- * the required components, the system should not be added to the ecs.
- * 
- * Todo: Systems should have a list of entities that have the system's component. This way, we don't have
- * to loop through all entities to find the ones that have the system's component.
- * 
- */
-
 /**
  * @class EntityComponentSystem represents an entity-component-system.
  * 
@@ -35,11 +15,11 @@ export class EntityComponentSystem extends SystemModule {
     init(engine) {
         this.engine = engine
         this.idGenerator = createSimpleIdGenerator()
-        this.entities = []
         this.systems = {}
         this.activeSystems = []
+        this.toRemoveEntities = []
 
-        // Add common systems
+        // Add engine's default systems
         Object.entries(Systems).forEach(([name, system]) => {
             this.addSystem({ name, class: system })
         })
@@ -49,36 +29,18 @@ export class EntityComponentSystem extends SystemModule {
         this.entities.forEach(entity => entity.destroy())
         this.entities = []
 
-        this.activeSystems.forEach(system => system.dispose())
-        this.activeSystems = []
+        this.activeSystems.forEach(system => {
+            system.forEach(entity => system.destroyComponent(entity.components[system.name], entity))
+            system.dispose()
+        })
 
         this.systems = {}
+        this.activeSystems = []
     }
 
     update(delta, time) {
-        // Remove destroyed entities
-        this.entities = this.entities.filter(entity => {
-            if (entity.destroyed) {
-                this.activeSystems
-                    .filter(system => entity.hasComponent(system.name))
-                    .forEach(system => system.destroyComponent(entity.components[system.name], entity))
-                
-                return false
-            }
-
-            return true
-        })
-
-        this.activeSystems.forEach(system => {
-            // This can be optimized by only looping through entities that have the system's component
-            // instead of looping through all entities. This can be done by keeping a list of entities
-            // that have the system's component inside the system itself.
-            this.entities
-                .filter(entity => entity.hasComponent(system.name))
-                .forEach(entity => {
-                    system.updateEntity(entity, delta, time)
-                })
-        })
+        this.activeSystems.forEach(system => system.update(delta, time))
+        this.flushRemovedEntities() // Must be called after all systems have updated for several reasons
     }
 
     /**
@@ -157,6 +119,19 @@ export class EntityComponentSystem extends SystemModule {
     }
 
     /**
+     * Distributes an entity to its systems based on its components so that the systems can operate on the entity.
+     * 
+     * @param {Entity} entity The entity to distribute to its systems.
+     * @returns {void}
+     */
+    distributeEntityToSystems(entity) {
+        const names = Object.keys(entity.components)
+        const systems = this.activeSystems.filter(system => names.includes(system.name))
+
+        systems.forEach(system => system.addEntity(entity))
+    }
+
+    /**
      * 
      * @param {Array | Object<string, Object | true>} componentsList A list of components to add to the entity or an object with the component name as the key and the object as the component options. If the value is true, the component will be created by the system.
      * @returns {Entity} The created entity
@@ -179,8 +154,40 @@ export class EntityComponentSystem extends SystemModule {
         // Create entity
         const entity = new Entity()
         entity.setup(this.idGenerator(), components)
+        entity.on('destroy', () => this.markEntityForRemoval(entity))
 
-        this.entities.push(entity)
+        this.distributeEntityToSystems(entity)
+
         return entity
+    }
+
+    /**
+     * Entities are removed at the end of update loop.
+     * 
+     * @param {Entity} entity The entity to remove.
+     */
+    markEntityForRemoval(entity) {
+        this.toRemoveEntities.push(entity)
+    }
+
+    /**
+     * Removes entities that have been marked for removal.
+     */
+    flushRemovedEntities() {
+        this.toRemoveEntities.forEach(entity => {
+            const names = Object.keys(entity.components)
+            const systems = this.activeSystems.filter(system => names.includes(system.name))
+
+            systems.forEach(system => {
+                system.removeEntity(entity)
+                system.destroyComponent(entity.components[system.name], entity)
+
+                if (system.entities.length === 0) {
+                    this.deactivateSystem(system)
+                }
+            })
+        })
+
+        this.toRemoveEntities = []
     }
 }

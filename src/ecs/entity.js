@@ -5,6 +5,9 @@ import EventEmitter from "eventemitter3"
  * @extends EventEmitter
  * 
  * @property {string} id The unique id of the entity.
+ * @property {boolean} active Whether the entity is active.
+ * @property {boolean} destroyed Whether the entity is destroyed.
+ * @property {Object<string, EntityComponent>} components The map of components.
  * 
  * @emits destroy When the entity is destroyed.
  */

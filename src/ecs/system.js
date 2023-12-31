@@ -1,46 +1,4 @@
 
-// /**
-//  * @typedef {Object} SystemDefinitionObj A function that returns a system definition object.
-//  * @property {string} type The name of the system.
-//  * @property {Function} [dispose] A function that disposes the system.
-//  * @property {Function} [createComponent] A function that returns a component.
-//  * @property {Function} [destroyComponent] A function that destroys a component.
-//  * @property {Function} [updateEntity] A function that updates an entity.
-//  * @property {string} [dependencies] The dependencies of the system.
-//  */
-
-// /**
-//  * @typedef {Function} SystemDefinitionFn A function that returns a system definition object.
-//  * @param {Object} context The context of the system definition.
-//  * 
-//  * @returns {SystemDefinitionObj}
-//  */
-
-// function validateDefinition(definition) {
-//     if (!definition.type) throw new Error('System type is undefined.')
-// }
-
-// /**
-//  * 
-//  * @param {SystemDefinitionFn} definitionFn 
-//  * @returns {SystemDefinitionFn} The system definition function.
-//  */
-// export const defineSystem = (definitionFn) => {
-//     return (...context) => {
-//         const definition = definitionFn(...context)
-//         validateDefinition(definition)
-
-//         definition.dispose = definition.dispose ?? (() => {})
-//         definition.createComponent = definition.createComponent ?? (() => {})
-//         definition.destroyComponent = definition.destroyComponent ?? (() => {})
-//         definition.updateEntity = definition.updateEntity ?? (() => {})
-//         definition.dependencies = definition.dependencies ?? []
-
-//         return definition
-//     }
-// }
-
-
 /**
  * @typedef { import('./entity.js').Entity } Entity
  * @typedef { import('./component.js').EntityComponent } EntityComponent
@@ -62,6 +20,40 @@ export class EntitySystem {
         this.name = name
         this.ecs = ecs
         this.engine = engine
+        this.entities = []
+    }
+
+    /**
+     * Adds an entity to the system.
+     * 
+     * @param {Entity} entity
+     * @returns {void}
+     */
+    addEntity(entity) {
+        this.entities.push(entity)
+    }
+
+    /**
+     * Removes an entity from the system.
+     *  
+     * @param {Entity} entity
+     * @returns {void}
+    */
+    removeEntity(entity) {
+        this.entities = this.entities.filter(e => e !== entity)
+    }
+
+    /**
+     * Updates the system's entities.
+     * 
+     * @param {number} delta
+     * @param {number} time
+     * @returns {void}
+     */
+    update(delta, time) {
+        this.entities.forEach(entity => {
+            this.updateEntity(entity, delta, time)
+        })
     }
 
     /**
@@ -86,9 +78,10 @@ export class EntitySystem {
      * @abstract
      * 
      * @param {Object} component The component to destroy.
+     * @param {Entity} entity The entity that owns the component.
      * @returns {void}
      */
-    destroyComponent(component) {}
+    destroyComponent(component, entity) {}
 
     /**
      * @abstract
