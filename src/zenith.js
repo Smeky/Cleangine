@@ -5,6 +5,7 @@ import { Graphics2D } from './graphics/2d/graphics'
 import { Graphics3D } from './graphics/3d/graphics'
 import { InputManager } from './input/input-manager'
 import { Scene } from './core/scene'
+import { PerformanceModule } from './debug/performance'
 import { SystemBase } from './core/system-base'
 import { TweensManager } from './core/tweens-manager'
 import { UserInterface } from './ui/user-interface'
@@ -74,6 +75,9 @@ export class Zenith extends SystemBase {
         /** @type {AssetManager} */
         this.assets = this.addModule(new AssetManager())
 
+        this.debug = {
+            performance: this.addModule(new PerformanceModule()),
+        }
 
         /** @type {EventEmitter} */
         this.events = new EventEmitter()
@@ -115,6 +119,8 @@ export class Zenith extends SystemBase {
         if (!this.isRunning) 
             return
 
+        this.debug.performance.begin()
+
         if (!this.lastFrameTime)
             this.lastFrameTime = time
 
@@ -135,6 +141,8 @@ export class Zenith extends SystemBase {
 
         // Not needed atm
         // this.events.emit('update:after', this.delta, time)
+
+        this.debug.performance.end()
 
         window.requestAnimationFrame(this.update)
     }
