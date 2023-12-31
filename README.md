@@ -10,6 +10,17 @@ Zenith Engine, not just a game engine but a framework, streamlines the developme
 
 The essence of this project? Well-documented, straightforward code with an architecture that's a easy to comprehend and extend.
 
+### Noteworthy Features
+- [x] 2D and 3D rendering
+- [ ] Simple physics
+- [ ] Audio
+- [ ] Headless UI library
+  - [ ] UI components
+- [ ] Same ECS components for 2D and 3D, making it easy to switch rendering modes
+- [ ] Seemless transition between 2D and 3D
+
+
+## Documentation
 - [Todo List](./docs/todos.md)
 - [Issues](./docs/issues.md)
 

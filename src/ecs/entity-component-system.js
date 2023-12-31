@@ -39,7 +39,10 @@ export class EntityComponentSystem extends SystemModule {
     }
 
     update(delta, time) {
-        this.activeSystems.forEach(system => system.update(delta, time))
+        this.activeSystems
+            .filter(system => !system.isUpdateDisabled)
+            .forEach(system => system.update(delta, time))
+    
         this.flushRemovedEntities() // Must be called after all systems have updated for several reasons
     }
 
@@ -74,6 +77,7 @@ export class EntityComponentSystem extends SystemModule {
             return system
 
         this.activeSystems.push(system)
+        system.init()
 
         return system
     }
@@ -81,6 +85,8 @@ export class EntityComponentSystem extends SystemModule {
     deactivateSystem(system) {
         const index = this.activeSystems.indexOf(system)
         if (index === -1) return
+
+        system.dispose()
 
         this.activeSystems.splice(index, 1)
     }
@@ -97,11 +103,18 @@ export class EntityComponentSystem extends SystemModule {
         // Activate missing systems
         if (active.length !== names.length) {
             const missing = names.filter(name => !active.find(system => system.name === name))
+            const missingSystems = missing.map(name => this.systems[name])
+
+            // Throw error if system does not exist
+            missingSystems.forEach((system, index) => {
+                if (!system)
+                    throw new Error(`System "${names[index]}" does not exist.`)
+            })
 
             // Add missing systems to the active systems list
             newlyActive.push(
                 // Activate missing systems 
-                ...missing.map(name => this.activateSystem(this.systems[name]))
+                ...missingSystems.map(system => this.activateSystem(system))
             )
 
             active.push(...newlyActive)
@@ -139,7 +152,14 @@ export class EntityComponentSystem extends SystemModule {
     createEntity(componentsList = []) {
         const names = Array.isArray(componentsList) ? componentsList : Object.keys(componentsList)
         
-        this.ensureSystems(names)
+        try {
+            this.ensureSystems(names)
+        }
+        catch (e) {
+            console.warn('Entity not created.')
+            console.error(e)
+            return
+        }
 
         // Setup entity components
         const components = names.reduce((acc, name) => {

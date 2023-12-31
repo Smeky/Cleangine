@@ -18,8 +18,14 @@ export default class ECSSprite extends EntitySystem {
 
         sprite.position.x = transform.position.x
         sprite.position.y = transform.position.y
-        sprite.rotation = transform.rotation
-        sprite.scale.x = transform.scale.x
-        sprite.scale.y = transform.scale.y
+
+        if (transform.rotation) {
+            sprite.rotation = transform.rotation
+        }
+
+        if (transform.scale) {
+            sprite.scale.x = transform.scale.x
+            sprite.scale.y = transform.scale.y
+        }
     }
 }

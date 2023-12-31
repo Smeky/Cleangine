@@ -21,6 +21,8 @@ export class EntitySystem {
         this.ecs = ecs
         this.engine = engine
         this.entities = []
+
+        this.isUpdateDisabled = false
     }
 
     /**
@@ -54,6 +56,20 @@ export class EntitySystem {
         this.entities.forEach(entity => {
             this.updateEntity(entity, delta, time)
         })
+    }
+
+    /**
+     * Disables the system's update on its entities.
+     */
+    disableUpdates() {
+        this.isUpdateDisabled = true
+    }
+
+    /**
+     * Enables the system's update on its entities.
+     */
+    enableUpdates() {
+        this.isUpdateDisabled = false
     }
 
     /**
