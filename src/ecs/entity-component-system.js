@@ -19,10 +19,7 @@ export class EntityComponentSystem extends SystemModule {
         this.activeSystems = []
         this.toRemoveEntities = []
 
-        // Add engine's default systems
-        Object.entries(Systems).forEach(([name, system]) => {
-            this.addSystem({ name, class: system })
-        })
+        this.addSystems(Systems)
     }
 
     dispose() {
@@ -65,6 +62,17 @@ export class EntityComponentSystem extends SystemModule {
         this.systems[system.name] = system
 
         return system
+    }
+
+    /**
+     * Adds multiple systems.
+     * 
+     * @param {Object<string, object>} systems A map of system options with the system name as the key.
+     */
+    addSystems(systems) {
+        Object.entries(systems).forEach(([name, system]) => {
+            this.addSystem({ name, class: system })
+        })
     }
     
     removeSystem(system) {

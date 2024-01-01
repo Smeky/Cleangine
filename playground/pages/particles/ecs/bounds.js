@@ -1,7 +1,6 @@
 import { EntitySystem } from 'zenith/ecs/system'
-import { makeObservable } from 'zenith/core/observable'
 
-export default class ECSColor extends EntitySystem {
+export default class ECSBounds extends EntitySystem {
     dependencies = ['transform']
 
     createComponent({ top, left, bottom, right }) {
