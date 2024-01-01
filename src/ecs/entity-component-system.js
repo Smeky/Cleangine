@@ -56,8 +56,11 @@ export class EntityComponentSystem extends SystemModule {
         console.assert(options.name, 'System name is undefined.')
         console.assert(options.class, 'System class is undefined.')
 
-        const system = new options.class({ engine: this.engine, ecs: this })
-        system.name = camelToKebab(options.name)
+        const system = new options.class({ 
+            name: camelToKebab(options.name),
+            ecs: this,
+            engine: this.engine, 
+        })
 
         this.systems[system.name] = system
 
@@ -92,6 +95,7 @@ export class EntityComponentSystem extends SystemModule {
     }
 
     /**
+     * Ensures that the systems exist and are active.
      * 
      * @param {string[]} names A list of system names to ensure that they exist
      * @returns {Object<string, EntitySystem>} A map of systems with the system name as the key.
