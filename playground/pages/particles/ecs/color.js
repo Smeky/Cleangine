@@ -10,27 +10,22 @@ export default class ECSColor extends EntitySystem {
         const observableColor = makeObservable(color)
         
         observableColor.observe((newColor) => 
-            this.setEntityColor(color.entity, newColor)
+            this.setEntityColor(entity, newColor)
         )
 
         return observableColor
     }
 
-    setupEntity(entity) {
+    setupComponent(entity) {
         const { color } = entity.components
         this.setEntityColor(entity, color.value)
     }
-
-    updateEntity(entity, delta) {
-        console.log('color updated?!')
-    }
     
     setEntityColor(entity, color) {
-        // const { sprite } = entity.components
-        // console.log('setEntityColor', sprite, color)
+        const { sprite } = entity.components
 
-        // if (sprite) {
-        //     sprite.tint = color
-        // }
+        if (sprite) {
+            sprite.tint = color
+        }
     }
 }

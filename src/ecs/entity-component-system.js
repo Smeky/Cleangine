@@ -150,35 +150,53 @@ export class EntityComponentSystem extends SystemModule {
      * @returns {Entity} The created entity
      */
     createEntity(componentsList = []) {
-        const names = Array.isArray(componentsList) ? componentsList : Object.keys(componentsList)
-        
-        try {
-            this.ensureSystems(names)
-        }
-        catch (e) {
-            console.warn('Entity not created.')
-            console.error(e)
-            return
-        }
-
-        // Setup entity components
-        const components = names.reduce((acc, name) => {
-            const system = this.systems[name]
-            const options = componentsList[name] ?? {}
-
-            acc[name] = system.createComponent(options)
-
-            return acc
-        }, {})
-
         // Create entity
         const entity = new Entity()
-        entity.setup(this.idGenerator(), components)
+        const components = this.createEntityComponents(entity, componentsList)
+
+        entity.setComponents(components)
         entity.on('destroy', () => this.markEntityForRemoval(entity))
 
         this.distributeEntityToSystems(entity)
+        this.setupEntity(entity)
 
         return entity
+    }
+
+    /**
+     * Creates components for an entity.
+     * 
+     * @param {Entity} entity The entity to create components for.
+     * @param {Array | Object<string, Object | true>} componentsList A list of components to add to the entity or an object with the component name as the key and the object as the component options. If the value is true, the component will be created by the system.
+     * @returns {Object<string, EntityComponent>} The created components map.
+     */
+    createEntityComponents(entity, componentsList = []) {
+        const names = Array.isArray(componentsList) ? componentsList : Object.keys(componentsList)
+
+        // Ensure every component has respective system
+        this.ensureSystems(names)
+
+        return names.reduce((acc, name) => {
+            const system = this.systems[name]
+            const options = componentsList[name] ?? {}
+
+            acc[name] = system.createComponent(options, entity)
+
+            return acc
+        }, {})
+    }
+
+    /**
+     * Sets up an entity.
+     * 
+     * @param {Entity} entity The entity to set up.
+    */
+    setupEntity(entity) {
+        const names = Object.keys(entity.components)
+        const systems = this.activeSystems.filter(system => names.includes(system.name))
+
+        entity.setup(this.idGenerator())
+        systems.forEach(system => system.setupComponent(entity))
     }
 
     /**

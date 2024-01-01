@@ -88,7 +88,16 @@ export class EntitySystem {
      * @param {Object} options The options for the component.
      * @returns {Object} The component.
      */
-    createComponent(options) {}
+    createComponent(options, entity) {}
+
+    /**
+     * @abstract
+     * 
+     * @param {Object} component The component to setup.
+     * @param {Entity} entity The entity that owns the component.
+     * @returns {void}
+     */
+    setupComponent(component, entity) {}
 
     /**
      * @abstract

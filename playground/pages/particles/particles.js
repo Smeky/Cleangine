@@ -16,7 +16,7 @@ export default class ParticlesApp extends ZenithApplication {
         this.particleDef = {
             texture: Pixi.Texture.from(createCircleTexture(6, '#ffffff')),
             size: 6,
-            count: 1,
+            count: 500,
             speed: 100,
         }
 
@@ -49,8 +49,8 @@ export default class ParticlesApp extends ZenithApplication {
                 rotation: 0,
             },
             velocity: {
-                x: 0,
-                y: 0,
+                x: Math.random() * speed - speed / 2,
+                y: Math.random() * speed - speed / 2,
             },
         })
     }
