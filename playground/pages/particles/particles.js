@@ -67,14 +67,15 @@ function getAttractionColor(value) {
  * @param {Object[]} attractionTable - The attraction table array.
  * @returns {HTMLTableElement} The HTML table element.
  */
-function createAttractionTableElement(attractionTable) {
+function createAttractionTableElement(attractionTable, seed) {
     let table = document.createElement('table')
     let thead = table.createTHead()
     let tbody = table.createTBody()
 
     // Header Row
     let headerRow = thead.insertRow()
-    headerRow.insertCell()
+    headerRow.insertCell().textContent = seed
+    headerRow.style.color = 'white'
     attractionTable.forEach(item => {
         let cell = headerRow.insertCell()
         cell.style.backgroundColor = item.color
@@ -110,7 +111,7 @@ export default class ParticlesApp extends ZenithApplication {
         super.init(options)
 
         this.ecs.addSystems(ECSSystems)
-        
+
         this.particles = []
         this.particleDef = {
             texture: Pixi.Texture.from(createCircleTexture(5, '#ffffff')),
@@ -119,13 +120,15 @@ export default class ParticlesApp extends ZenithApplication {
             speed: 100,
         }
 
-        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff']
-        const seed = 123456
-        this.attractionTable = generateAttractionTable(colors)
+        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff']
+        const seed = Math.round(Math.random() * 10000) // 123456
+        this.attractionTable = generateAttractionTable(colors, seed)
 
-        console.table(this.attractionTable.map(({ color, attractions }) => ({ color, ...attractions })))
+        setInterval(() => {
+            window.location.reload()
+        }, 60000)
 
-        const table = createAttractionTableElement(this.attractionTable)
+        const table = createAttractionTableElement(this.attractionTable, seed)
         document.body.appendChild(table)
         table.style.position = 'absolute'
         table.style.top = '0'

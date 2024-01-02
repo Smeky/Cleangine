@@ -9,7 +9,8 @@ import ParticlesApp from './particles'
 const containerRef = ref(null)
 useZenithApp(containerRef, {
     renderingMode: '2d',
-    application: ParticlesApp
+    application: ParticlesApp,
+    stopOnBlur: false,
 })
 </script>
 

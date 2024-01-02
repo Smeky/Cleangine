@@ -9,10 +9,12 @@ const linearPeak = (x) => {
 
 export default class ECSForce extends EntitySystem {
     init() {
-        this.force = 20
+        this.force = 150
         // this.attraction = 1
         this.repulsion = 1
-        this.attractionRadius = 300
+        this.attractionRadius = 200
+        this.attractionRadiusSquared = this.attractionRadius * this.attractionRadius
+        this.frictionFactor = 0.9
     }
 
     createComponent({ attractions, color }) {
@@ -26,44 +28,44 @@ export default class ECSForce extends EntitySystem {
     updateEntity(entity, delta) {
         const { force, transform, velocity } = entity.components
 
+        let velocityX = 0
+        let velocityY = 0
+
         this.entities.forEach(other => {
             if (other.id === entity.id) 
                 return
 
-            const { transform: otherTransform } = other.components
-            const dx = otherTransform.position.x - transform.position.x
-            const dy = otherTransform.position.y - transform.position.y
-            const distance = Math.sqrt(dx * dx + dy * dy)
-            const relativeDistance = distance / this.attractionRadius
+            const dx = other.components.transform.position.x - transform.position.x
+            const dy = other.components.transform.position.y - transform.position.y
+            const distanceSquared = dx * dx + dy * dy
 
-            if (distance === 0 || relativeDistance > 1) return
+            if (distanceSquared  === 0 || distanceSquared > this.attractionRadiusSquared) return
 
             // Even though this implementation is not physically accurate, it is visually pleasing
             // and works well in 2d space. The force magnitude is calculated using a linear function
 
+            const distance = Math.sqrt(distanceSquared)
+            const relativeDistance = distance / this.attractionRadius
             let forceMagnitude
 
             // Linear repulsion force
-            if (relativeDistance < 0.25) {
+            if (relativeDistance < 0.2) {
                 forceMagnitude = - this.repulsion * (1 - relativeDistance / 0.25)
             }
             // Linear attraction force
             else {
-                const { force: otherForce } = other.components
-                const attraction = force.attractions[otherForce.color] ?? 0
+                const attraction = force.attractions[other.components.force.color] ?? 0
                 forceMagnitude = attraction * linearPeak(relativeDistance - 0.25)
             }
 
-            // Normalizing the direction vector
-            const directionX = dx / distance
-            const directionY = dy / distance
-
-            // Applying the net force in the normalized direction
-            velocity.x += (forceMagnitude * this.force * directionX) * delta
-            velocity.y += (forceMagnitude * this.force * directionY) * delta
+            velocityX += forceMagnitude * this.force * (dx / distance)
+            velocityY += forceMagnitude * this.force * (dy / distance)
         })
 
-        velocity.x *= 0.99
-        velocity.y *= 0.99
+        velocity.x *= this.frictionFactor
+        velocity.y *= this.frictionFactor
+
+        velocity.x += velocityX * delta
+        velocity.y += velocityY * delta
     }
 }

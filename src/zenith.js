@@ -18,6 +18,7 @@ import { UserInterface } from './ui/user-interface'
 export const ZenithOptions = {
     container: document.body,
     renderingMode: '3d',
+    stopOnBlur: true,
 }
 
 /**
@@ -87,8 +88,8 @@ export class Zenith extends SystemBase {
         // Initialize modules
         this.modulesList.forEach(module => module.init(this))
 
-        window.addEventListener('blur', this.onBlur, false)
-        window.addEventListener('focus', this.onFocus, false)
+        if (this.options.stopOnBlur)
+            this.enableStopOnBlur()
     }
 
     dispose() {
@@ -145,6 +146,19 @@ export class Zenith extends SystemBase {
         this.debug.performance.end()
 
         window.requestAnimationFrame(this.update)
+    }
+
+    enableStopOnBlur() {
+        window.addEventListener('blur', this.onBlur, false)
+        window.addEventListener('focus', this.onFocus, false)
+
+        if (!document.hasFocus())
+            this.stop()
+    }
+
+    disableStopOnBlur() {
+        window.removeEventListener('blur', this.onBlur, false)
+        window.removeEventListener('focus', this.onFocus, false)
     }
 
     onBlur = () => this.stop()
