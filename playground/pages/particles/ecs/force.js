@@ -8,13 +8,15 @@ const linearPeak = (x) => {
 }
 
 export default class ECSForce extends EntitySystem {
+    dependencies = ['transform', 'velocity']
+
     init() {
-        this.force = 150
+        this.force = 100
         // this.attraction = 1
-        this.repulsion = 1
-        this.attractionRadius = 200
+        this.repulsion = 1.5
+        this.attractionRadius = 120
         this.attractionRadiusSquared = this.attractionRadius * this.attractionRadius
-        this.frictionFactor = 0.9
+        this.frictionFactor = 0.75
     }
 
     createComponent({ attractions, color }) {
@@ -55,7 +57,7 @@ export default class ECSForce extends EntitySystem {
             // Linear attraction force
             else {
                 const attraction = force.attractions[other.components.force.color] ?? 0
-                forceMagnitude = attraction * linearPeak(relativeDistance - 0.25)
+                forceMagnitude = attraction * (this.attractionRadius / distance) * 2 * linearPeak(relativeDistance - 0.25)
             }
 
             velocityX += forceMagnitude * this.force * (dx / distance)

@@ -10,7 +10,7 @@ const containerRef = ref(null)
 useZenithApp(containerRef, {
     renderingMode: '2d',
     application: ParticlesApp,
-    stopOnBlur: false,
+    // stopOnBlur: false,
 })
 </script>
 

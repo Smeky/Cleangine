@@ -91,6 +91,8 @@ export class EntitySystem {
     createComponent(options, entity) {}
 
     /**
+     * Called when entity is ready to be setup.
+     * 
      * @abstract
      * 
      * @param {Object} component The component to setup.

@@ -114,9 +114,9 @@ export default class ParticlesApp extends ZenithApplication {
 
         this.particles = []
         this.particleDef = {
-            texture: Pixi.Texture.from(createCircleTexture(5, '#ffffff')),
-            size: 5,
-            count: 1000,
+            texture: Pixi.Texture.from(createCircleTexture(3, '#ffffff')),
+            size: 3,
+            count: 1200,
             speed: 100,
         }
 
@@ -125,8 +125,8 @@ export default class ParticlesApp extends ZenithApplication {
         this.attractionTable = generateAttractionTable(colors, seed)
 
         setInterval(() => {
-            window.location.reload()
-        }, 60000)
+            this.attractionTable = generateAttractionTable(colors, Math.round(Math.random() * 10000))
+        }, 45000)
 
         const table = createAttractionTableElement(this.attractionTable, seed)
         document.body.appendChild(table)
@@ -176,7 +176,8 @@ export default class ParticlesApp extends ZenithApplication {
             velocity: {
                 x: 0,
                 y: 0,
-            }
+            },
+            // partition: true,
             // velocity: {
             //     x: Math.random() * speed - speed / 2,
             //     y: Math.random() * speed - speed / 2,

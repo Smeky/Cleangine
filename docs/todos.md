@@ -66,6 +66,7 @@
 
 ## Technical Debt
 - [ ] All jsdoc type should be lowercase (e.g. `string` instead of `String`)
+- [ ] Remove all const { ... } = object from loops and use the object directly instead. Performance takes a hit here.
 
 ## Documentation
 - [ ] Add a way to generate documentation from jsdoc
