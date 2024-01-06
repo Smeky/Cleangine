@@ -4,7 +4,7 @@ export default class ECSVelocity extends EntitySystem {
     dependencies = ['transform']
 
     createComponent({ x, y, z }) {
-        return { x, y, z }
+        return { x: x ?? 0, y: y ?? 0, z: z ?? 0 }
     }
 
     updateEntity(entity, delta) {

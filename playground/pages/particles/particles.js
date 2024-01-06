@@ -2,11 +2,6 @@ import * as Pixi from 'pixi.js'
 import { ZenithApplication } from 'zenith/zenith-application'
 import { createCircleTexture } from 'zenith/graphics/utils/createCircleTexture'
 
-// import ECSForce from './ecs/force'
-// import ECSColor from './ecs/color'
-// import ECSBounds from './ecs/bounds'
-// import ECSPartition from './ecs/partition'
-
 import ECSSystems from './ecs'
 
 function seededRandom(seed) {
@@ -114,8 +109,8 @@ export default class ParticlesApp extends ZenithApplication {
 
         this.particles = []
         this.particleDef = {
-            texture: Pixi.Texture.from(createCircleTexture(3, '#ffffff')),
-            size: 3,
+            texture: Pixi.Texture.from(createCircleTexture(4, '#ffffff')),
+            size: 4,
             count: 1200,
             speed: 100,
         }
@@ -173,15 +168,7 @@ export default class ParticlesApp extends ZenithApplication {
                 },
                 rotation: 0,
             },
-            velocity: {
-                x: 0,
-                y: 0,
-            },
-            // partition: true,
-            // velocity: {
-            //     x: Math.random() * speed - speed / 2,
-            //     y: Math.random() * speed - speed / 2,
-            // },
+            velocity: true,
         })
     }
 }

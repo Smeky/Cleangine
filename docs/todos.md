@@ -39,6 +39,7 @@
 - [ ] `Scene`
     - [ ] Aren't modules technically controllers?
 - [ ] Fix resize handling for both 2D and 3D
+- [ ] `SystemModule` should probably extend `SystemBase`
 
 ## Add 2D
 - [ ] create namespace for both 2D and 3D

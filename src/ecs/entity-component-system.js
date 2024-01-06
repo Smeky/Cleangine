@@ -1,6 +1,7 @@
 import { camelToKebab } from '../utils/string/cambel-to-kebab'
 import { createSimpleIdGenerator } from '../utils/id'
 import { Entity } from './entity'
+import { Quadtree } from './quadtree'
 import { SystemModule } from '../core/system-module'
 import Systems from './systems'
 
@@ -16,6 +17,7 @@ export class EntityComponentSystem extends SystemModule {
         this.engine = engine
         this.idGenerator = createSimpleIdGenerator()
         this.systems = {}
+        this.quadtree = new Quadtree(this)
         this.activeSystems = []
         this.toRemoveEntities = []
 
