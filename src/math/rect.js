@@ -25,6 +25,26 @@ export const rectangle = (x, y, width, height) => {
 }
 
 /**
+ * Creates a rectangle object from an object.
+ * 
+ * @param {Object} obj
+ * @param {number} obj.x
+ * @param {number} obj.y
+ * @param {number} obj.width
+ * @param {number} obj.height
+ * 
+ * @returns {Rectangle}
+ */
+export const rectangleFromObject = (obj) => {
+    return {
+        x: obj.x,
+        y: obj.y,
+        width: obj.width,
+        height: obj.height,
+    }
+}
+
+/**
  * Creates a rectangle object from two points.
  * 
  * @param {number} x1

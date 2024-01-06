@@ -1,5 +1,6 @@
 import { 
     rectangle, 
+    rectangleFromObject,
     rectangleFromPoints, 
     rectangleFromBounds, 
     rectangleFromSize, 
@@ -11,6 +12,10 @@ import {
 describe('Rectangle', () => {
     test('rectangle function creates a rectangle', () => {
         expect(rectangle(1, 2, 3, 4)).toEqual({ x: 1, y: 2, width: 3, height: 4 })
+    })
+
+    test('rectangleFromObject creates a rectangle from an object', () => {
+        expect(rectangleFromObject({ x: 1, y: 2, width: 3, height: 4, foo: 'bar' })).toEqual({ x: 1, y: 2, width: 3, height: 4 })
     })
 
     test('rectangleFromPoints creates a rectangle from two points', () => {
