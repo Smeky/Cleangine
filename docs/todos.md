@@ -47,6 +47,7 @@
   - [ ] Should be able to process entities with specific component(s)
   - [ ] This should replace the `needsComponent` prop
 - [ ] Rename all classes in `ecs` to start with `ECS` (e.g. `EntityComponentSystem` -> `ECS`, `Entity` -> `ECSEntity`, etc.)
+- [x] Remove all destructuring from loops and use the object directly instead. Performance takes a hit here.
 
 ## Add 2D
 - [x] create namespace for both 2D and 3D

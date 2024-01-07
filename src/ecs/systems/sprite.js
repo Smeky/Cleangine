@@ -14,7 +14,8 @@ export default class ECSSprite extends EntitySystem {
     }
 
     updateEntity(entity) {
-        const { sprite, transform } = entity.components
+        const sprite = entity.components.sprite
+        const transform = entity.components.transform
 
         sprite.position.x = transform.position.x
         sprite.position.y = transform.position.y

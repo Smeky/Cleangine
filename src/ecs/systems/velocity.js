@@ -8,7 +8,8 @@ export default class ECSVelocity extends EntitySystem {
     }
 
     updateEntity(entity, delta) {
-        const { velocity, transform } = entity.components
+        const transform = entity.components.transform
+        const velocity = entity.components.velocity
 
         transform.position.x += velocity.x * delta
         transform.position.y += velocity.y * delta

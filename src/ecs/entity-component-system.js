@@ -80,8 +80,6 @@ export class EntityComponentSystem extends SystemModule {
      * @param {Object<string, object>} systems A map of system options with the system name as the key.
      */
     addSystems(systems) {
-        console.log(Object.keys(systems))
-
         Object.entries(systems).forEach(([name, system]) => {
             this.addSystem({ name, class: system })
         })

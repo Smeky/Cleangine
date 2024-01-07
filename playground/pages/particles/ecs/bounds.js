@@ -13,7 +13,9 @@ export default class ECSBounds extends EntitySystem {
     }
     
     updateEntity(entity, delta) {
-        const { bounds, velocity, transform } = entity.components
+        const bounds = entity.components.bounds
+        const velocity = entity.components.velocity
+        const transform = entity.components.transform
 
         if (transform.position.x < bounds.left) {
             transform.position.x = bounds.right - 20

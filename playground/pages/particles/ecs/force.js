@@ -28,7 +28,9 @@ export default class ECSForce extends EntitySystem {
     }
 
     updateEntity(entity, delta) {
-        const { force, transform, velocity } = entity.components
+        const force = entity.components.force
+        const transform = entity.components.transform
+        const velocity = entity.components.velocity
 
         let velocityX = 0
         let velocityY = 0
