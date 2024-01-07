@@ -67,10 +67,6 @@ export class EntityComponentSystem extends SystemModule {
 
         this.systems[system.name] = system
 
-        if (!system.needsComponent) {
-            this.activateSystem(system)
-        }
-
         return system
     }
 
@@ -161,9 +157,7 @@ export class EntityComponentSystem extends SystemModule {
      */
     distributeEntityToSystems(entity) {
         const names = Object.keys(entity.components)
-        const systems = this.activeSystems.filter(system => 
-            names.includes(system.name) || !system.needsComponent
-        )
+        const systems = this.activeSystems.filter(system => names.includes(system.name))
 
         systems.forEach(system => system.addEntity(entity))
     }

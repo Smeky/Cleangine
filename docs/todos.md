@@ -18,7 +18,10 @@
 - [ ] Tests for `utils` files
 
 ## Math
-- Add custom implementation of Vector2 & Vector3 that wrap around Three.js and Pixi.js vectors
+- [ ] Add custom implementation of Vector2 & Vector3 that wrap around Three.js and Pixi.js vectors
+- [ ] Add rectangle, same as above
+- [ ] Add circle, same as above
+- [ ] Add line, same as above
 
 ## Library
 - [ ] Make the engine into a library (installable via npm)
@@ -41,13 +44,18 @@
 - [ ] Fix resize handling for both 2D and 3D
 - [ ] `SystemModule` should probably extend `SystemBase`
 
+## Graphics
+- [ ] Figure out a way to have the same API for both 2D and 3D objects, such as line, or rectangle
+  - [ ] 2D should mostly use 3D dimensions, so instead of Vector2, they should use Vector3
+  - [ ] In 3D, the 2D objects should be placed on the XZ plane
+
 ## ECS
 - [ ] `EntitySystem` should have a explicit way of telling what entities it should process
-  - [ ] Should be able to process all entities
-  - [ ] Should be able to process entities with specific component(s)
-  - [ ] This should replace the `needsComponent` prop
-- [ ] Rename all classes in `ecs` to start with `ECS` (e.g. `EntityComponentSystem` -> `ECS`, `Entity` -> `ECSEntity`, etc.)
+  - [ ] Process all entities
+  - [ ] Process entities with specific component(s)
+  - [ ] Procees the same component by different systems without the need for two separate components
 - [x] Remove all destructuring from loops and use the object directly instead. Performance takes a hit here.
+- [ ] `EntitySystem` name should be defined in the system itself
 
 ## Add 2D
 - [x] create namespace for both 2D and 3D
@@ -76,7 +84,9 @@
 ## Technical Debt
 - [ ] All jsdoc type should be lowercase (e.g. `string` instead of `String`)
 - [ ] Remove all const { ... } = object from loops and use the object directly instead. Performance takes a hit here.
+- [ ] (Try to) Begin using typescript
 
 ## Documentation
 - [ ] Add a way to generate documentation from jsdoc
 - [ ] Automate documentation generation on build (or use workflow to generate it on push to master)
+

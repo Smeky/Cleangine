@@ -15,7 +15,6 @@
  */
 export class EntitySystem {
     dependencies = []
-    needsComponent = true
 
     constructor({ name, ecs, engine }) {
         this.name = name
