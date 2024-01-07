@@ -41,9 +41,16 @@
 - [ ] Fix resize handling for both 2D and 3D
 - [ ] `SystemModule` should probably extend `SystemBase`
 
+## ECS
+- [ ] `EntitySystem` should have a explicit way of telling what entities it should process
+  - [ ] Should be able to process all entities
+  - [ ] Should be able to process entities with specific component(s)
+  - [ ] This should replace the `needsComponent` prop
+- [ ] Rename all classes in `ecs` to start with `ECS` (e.g. `EntityComponentSystem` -> `ECS`, `Entity` -> `ECSEntity`, etc.)
+
 ## Add 2D
-- [ ] create namespace for both 2D and 3D
-- [ ] move 3d to `/3d` namespace
+- [x] create namespace for both 2D and 3D
+- [x] move 3d to `/3d` namespace
 - [ ] create `2d` namespace and reflect 3D structure
 
 ## Assets

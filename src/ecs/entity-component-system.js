@@ -1,7 +1,6 @@
 import { camelToKebab } from '../utils/string/cambel-to-kebab'
 import { createSimpleIdGenerator } from '../utils/id'
 import { Entity } from './entity'
-import { Quadtree } from './quadtree'
 import { SystemModule } from '../core/system-module'
 import Systems from './systems'
 
@@ -17,9 +16,14 @@ export class EntityComponentSystem extends SystemModule {
         this.engine = engine
         this.idGenerator = createSimpleIdGenerator()
         this.systems = {}
-        this.quadtree = new Quadtree(this)
         this.activeSystems = []
         this.toRemoveEntities = []
+
+        // Todo: Split systems into:
+        //  - Update systems (systems that are updated)
+        //  - Updateless systems (systems that are not updated)
+        //  - Active systems (systems that are either 'Update' or 'Updateless')
+        //  - Inactive systems (systems that are paused or disabled)
 
         this.addSystems(Systems)
     }
@@ -63,6 +67,10 @@ export class EntityComponentSystem extends SystemModule {
 
         this.systems[system.name] = system
 
+        if (!system.needsComponent) {
+            this.activateSystem(system)
+        }
+
         return system
     }
 
@@ -72,6 +80,8 @@ export class EntityComponentSystem extends SystemModule {
      * @param {Object<string, object>} systems A map of system options with the system name as the key.
      */
     addSystems(systems) {
+        console.log(Object.keys(systems))
+
         Object.entries(systems).forEach(([name, system]) => {
             this.addSystem({ name, class: system })
         })
@@ -153,7 +163,9 @@ export class EntityComponentSystem extends SystemModule {
      */
     distributeEntityToSystems(entity) {
         const names = Object.keys(entity.components)
-        const systems = this.activeSystems.filter(system => names.includes(system.name))
+        const systems = this.activeSystems.filter(system => 
+            names.includes(system.name) || !system.needsComponent
+        )
 
         systems.forEach(system => system.addEntity(entity))
     }
