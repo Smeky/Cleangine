@@ -11,12 +11,12 @@ export default class ECSForce extends EntitySystem {
     dependencies = ['transform', 'velocity']
 
     init() {
-        this.force = 100
+        this.force = 300
         // this.attraction = 1
         this.repulsion = 1.5
-        this.attractionRadius = 120
+        this.attractionRadius = 250
         this.attractionRadiusSquared = this.attractionRadius * this.attractionRadius
-        this.frictionFactor = 0.75
+        this.frictionFactor = 0.8
     }
 
     createComponent({ attractions, color }) {

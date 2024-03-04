@@ -111,7 +111,7 @@ export default class ParticlesApp extends ZenithApplication {
         this.particleDef = {
             texture: Pixi.Texture.from(createCircleTexture(4, '#ffffff')),
             size: 4,
-            count: 1200,
+            count: 600,
             speed: 100,
         }
 
